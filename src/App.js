@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-
+import CreateTest from './Components/CreateTest';
+import styles from './App.module.css';
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		// <div className="Title">
+		//     <h1>Test Generator</h1>
+
+		//     <button>Create New Test</button>
+		//     <button>Upload Test Document</button>
+		// </div>
+
+		<div>
+			<CreateTest />
+		</div>
+	);
 }
 
 export default App;
