@@ -14,7 +14,7 @@ const AnswerChoices = (props) => {
 		<Fragment>
 			{optionValues.map((element, index) => (
 				<div key={index}>
-					{index == 0 ? (
+					{index === 0 ? (
 						<label>Answer</label>
 					) : (
 						<label>Option {index + 1}</label>

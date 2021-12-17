@@ -1,4 +1,4 @@
-import CreateTest from './Components/CreateTest';
+import CreateTest from './Components/CreateTest/CreateTest';
 import styles from './App.module.css';
 function App() {
 	return (

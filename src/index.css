@@ -5,12 +5,12 @@
 }
 
 html {
-	font-family: 'Noto Sans JP', sans-serif;
+	font-family: TimesNewRoman, 'Times New Roman', Times, Baskerville, Georgia;
 }
 
 body {
 	margin: 0;
-	background-color: white;
+	background-color: #eceabb;
 }
 
 code {
