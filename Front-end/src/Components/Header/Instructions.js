@@ -1,5 +1,5 @@
 import styles from './Instructions.module.css';
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 
 const Title = () => {

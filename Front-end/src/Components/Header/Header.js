@@ -1,6 +1,7 @@
 import styles from './Header.module.css';
 import { useState, Fragment } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
+import Button from '../UI/Button';
 
 const Header = () => {
 	const [alignLeft, setAlignLeft] = useState(true);
@@ -32,13 +33,13 @@ const Header = () => {
 						/>
 					</div>
 					<div className={styles['btn-container']}>
-						<button
+						<Button
 							type='button'
 							className={styles['align-btn']}
 							onClick={alignRightBtn}
 						>
-							Align Right
-						</button>
+							Align Header Right
+						</Button>
 					</div>
 				</Fragment>
 			) : (
@@ -49,19 +50,19 @@ const Header = () => {
 							className={`${styles['header']} ${styles['header-right']}`}
 							autoFocus
 							minRows={1}
-							placeholder='header'
+							placeholder='Header'
 							value={enteredHeader}
 							onChange={headerChangeHandler}
 						/>
 					</div>
 					<div className={styles['btn-container']}>
-						<button
+						<Button
 							type='button'
 							className={styles['align-btn']}
 							onClick={alignLeftBtn}
 						>
-							Align Left
-						</button>
+							Align Header Left
+						</Button>
 					</div>
 				</Fragment>
 			)}
