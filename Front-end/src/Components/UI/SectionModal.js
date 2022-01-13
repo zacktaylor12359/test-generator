@@ -1,8 +1,15 @@
+import { useState } from 'react';
 import Modal from './Modal';
 import Button from './Button';
 import styles from './SectionModal.module.css';
 
 const SectionModal = (props) => {
+	const [typeSettings, setTypeSettings] = useState('Mulitple Choice');
+	const typeChangeHandler = (event) => {
+		event.preventDefault();
+		if (event.target.value == 'Multiple Choice') {
+		}
+	};
 	return (
 		<Modal>
 			<header className={styles.header}>
@@ -32,6 +39,9 @@ const SectionModal = (props) => {
 
 				<div className={styles['form-input']}>
 					<label htmlFor='question-type'>Queston Type:</label>
+					<select onChange={typeChangeHandler}>
+						<option value='Multiple Choice'>Multiple Choice</option>
+					</select>
 				</div>
 			</form>
 			<footer className={styles.actions}>
