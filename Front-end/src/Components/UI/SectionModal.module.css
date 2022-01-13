@@ -23,6 +23,18 @@ label {
 input {
 	width: 1.5rem;
 	height: 1.5rem;
+	padding: 0.5rem;
+	text-align: left;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+input[type='number'] {
+	-moz-appearance: textfield;
 }
 
 .actions {
@@ -30,13 +42,16 @@ input {
 	display: flex;
 	justify-content: flex-end;
 	background-color: white;
+	column-gap: 2rem;
 }
 
 .form-input {
-	height: 1.5rem;
 	padding-bottom: 1rem;
 }
 
+.number-input {
+	width: 3rem;
+}
 @media (min-width: 768px) {
 	.modal {
 		left: calc(50% - 20rem);
