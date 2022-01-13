@@ -10,7 +10,7 @@ const SectionModal = (props) => {
 			</header>
 			<form className={styles.content}>
 				<div className={styles['form-input']}>
-					<label for='title'>Section Title:</label>
+					<label htmlFor='title'>Section Title:</label>
 
 					<input
 						type='checkbox'
@@ -21,7 +21,7 @@ const SectionModal = (props) => {
 				</div>
 
 				<div className={styles['form-input']}>
-					<label for='instructions'>Section Instructions:</label>
+					<label htmlFor='instructions'>Section Instructions:</label>
 					<input
 						type='checkbox'
 						id='instructions'
@@ -31,7 +31,7 @@ const SectionModal = (props) => {
 				</div>
 
 				<div className={styles['form-input']}>
-					<label for='question-type'>Queston Type:</label>
+					<label htmlFor='question-type'>Queston Type:</label>
 				</div>
 			</form>
 			<footer className={styles.actions}>
