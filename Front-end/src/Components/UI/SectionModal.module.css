@@ -10,7 +10,19 @@
 
 .content {
 	padding: 1rem;
+	display: block;
 	background-color: white;
+}
+
+label {
+	padding-right: 1rem;
+	font-size: 1.5rem;
+	font-family: inherit;
+}
+
+input {
+	width: 1.5rem;
+	height: 1.5rem;
 }
 
 .actions {
@@ -18,6 +30,10 @@
 	display: flex;
 	justify-content: flex-end;
 	background-color: white;
+}
+
+.form-input {
+	display: block;
 }
 
 @media (min-width: 768px) {

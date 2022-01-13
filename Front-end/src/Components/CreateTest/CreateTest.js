@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState, useContext, Fragment } from 'react';
 import styles from './CreateTest.module.css';
 import Card from '../UI/Card';
 import Header from '../Header/Header';
@@ -7,8 +7,11 @@ import Instructions from '../Header/Instructions';
 import Button from '../UI/Button';
 import MCQuestion from '../QuestionTypes/multiple_choice/MCQuestion';
 import SectionModal from '../UI/SectionModal';
+import TestProvider from '../../store/TestProvider';
+import TestContext from '../../store/test-context';
 
 const CreateTest = () => {
+	const testCtx = useContext(TestContext);
 	//Header states
 	const [header, setHeader] = useState(false);
 
@@ -24,26 +27,26 @@ const CreateTest = () => {
 
 	//Header functions
 	const removeHeader = () => {
-		setHeader(false);
+		testCtx.removeHeader();
 	};
 	const addHeader = () => {
-		setHeader(true);
+		testCtx.addHeader();
 	};
 
 	//Title functions
 	const removeTitle = () => {
-		setTitle(false);
+		testCtx.removeTitle();
 	};
 	const addTitle = () => {
-		setTitle(true);
+		testCtx.addTitle();
 	};
 
 	//Instruction functions
 	const removeInstructions = () => {
-		setInstructions(false);
+		testCtx.removeInstructions();
 	};
 	const addInstructions = () => {
-		setInstructions(true);
+		testCtx.addInstructions();
 	};
 
 	//Section functions
@@ -82,7 +85,7 @@ const CreateTest = () => {
 			<form>
 				<Card className={styles['test-form']}>
 					{/*-----------Header UI--------------*/}
-					{header ? (
+					{testCtx.header ? (
 						<Fragment>
 							<Header />
 							<div className={styles['add-rmv-btn']}>
@@ -104,7 +107,7 @@ const CreateTest = () => {
 
 					{/*-----------Title UI--------------*/}
 
-					{title ? (
+					{testCtx.title ? (
 						<Fragment>
 							<Title />
 							<div className={styles['add-rmv-btn']}>
@@ -125,7 +128,7 @@ const CreateTest = () => {
 					)}
 
 					{/*-----------Instructions UI--------------*/}
-					{instructions ? (
+					{testCtx.instructions ? (
 						<Fragment>
 							<Instructions />
 							<div className={styles['add-rmv-btn']}>

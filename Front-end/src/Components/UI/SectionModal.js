@@ -8,9 +8,32 @@ const SectionModal = (props) => {
 			<header className={styles.header}>
 				<h2>{props.title}</h2>
 			</header>
-			<div className={styles.content}>
-				<p>{props.message}</p>
-			</div>
+			<form className={styles.content}>
+				<div className={styles['form-input']}>
+					<label for='title'>Section Title:</label>
+
+					<input
+						type='checkbox'
+						id='title'
+						name='title'
+						value='Title'
+					/>
+				</div>
+
+				<div className={styles['form-input']}>
+					<label for='instructions'>Section Instructions:</label>
+					<input
+						type='checkbox'
+						id='instructions'
+						name='instructions'
+						value='Instructions'
+					/>
+				</div>
+
+				<div className={styles['form-input']}>
+					<label for='question-type'>Queston Type:</label>
+				</div>
+			</form>
 			<footer className={styles.actions}>
 				<Button onClick={props.onClose}>Okay</Button>
 			</footer>
