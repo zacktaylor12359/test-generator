@@ -1,10 +1,13 @@
+import { useState, useContext, Fragment } from 'react';
+
 import styles from './MCQuestion.module.css';
-import { useState } from 'react';
 import AnswerChoices from './AnswerChoices';
-import { Fragment } from 'react';
 import Button from '../../UI/Button';
+import TestContext from '../../../store/test-context';
 
 const MCQuestion = (props) => {
+	const testCtx = useContext(TestContext);
+
 	const [numOptions, setNumOptions] = useState(4);
 	const [question, setQuestion] = useState([{ question: '' }]);
 
@@ -24,30 +27,31 @@ const MCQuestion = (props) => {
 		setQuestion(newFormValues);
 	};
 
+	console.log(props.section);
 	return (
 		<Fragment>
-			{question.map((element, index) => (
+			{props.section.section_structure.questions.map((element, index) => (
 				<div key={index}>
 					<label>Question {index + 1}</label>
 					<textarea
-						type='text'
-						name='question'
+						type="text"
+						name="question"
 						className={styles['question-field']}
 						value={element.question || ''}
 						onChange={(e) => handleQuestionChange(index, e)}
 					/>
-					<AnswerChoices numChoices={numOptions} />
+					<AnswerChoices answerOptions={element.answerOptions} />
 					<Button
 						className={styles['rmv-btn']}
-						type='Button'
+						type="Button"
 						onClick={() => removeQuestion(index)}
 					>
 						Remove Question
 					</Button>
 				</div>
 			))}
-			<div className='Button-section'>
-				<Button type='Button' onClick={() => addQuestion()}>
+			<div className="Button-section">
+				<Button type="Button" onClick={() => addQuestion()}>
 					AddQuestion
 				</Button>
 			</div>

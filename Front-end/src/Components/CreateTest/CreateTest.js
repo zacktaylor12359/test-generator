@@ -6,20 +6,12 @@ import Title from '../Header/Title';
 import Instructions from '../Header/Instructions';
 import Button from '../UI/Button';
 import MCQuestion from '../QuestionTypes/multiple_choice/MCQuestion';
-import SectionModal from '../UI/SectionModal';
+import SectionModal from '../ModalContent/AddSectionModal';
 import TestProvider from '../../store/TestProvider';
 import TestContext from '../../store/test-context';
 
 const CreateTest = () => {
 	const testCtx = useContext(TestContext);
-	//Header states
-	const [header, setHeader] = useState(false);
-
-	//Title states
-	const [title, setTitle] = useState(false);
-
-	//Instruction states
-	const [instructions, setInstructions] = useState(false);
 
 	//Section states
 	const [section, setSection] = useState([]);
@@ -51,9 +43,7 @@ const CreateTest = () => {
 
 	//Section functions
 	const removeSection = (index) => {
-		let newFormValues = [...section];
-		newFormValues.splice(index, 1);
-		setSection(newFormValues);
+		testCtx.removeSection(index);
 	};
 	const addSection = () => {
 		setSection([...section, {}]);
@@ -77,8 +67,8 @@ const CreateTest = () => {
 		<Fragment>
 			{sectionModal && (
 				<SectionModal
-					title='Add New Section'
-					message='Placeholder'
+					title="Add New Section"
+					message="Placeholder"
 					onClose={hideSectionModal}
 				/>
 			)}
@@ -90,7 +80,7 @@ const CreateTest = () => {
 							<Header />
 							<div className={styles['add-rmv-btn']}>
 								<Button
-									type='Button'
+									type="Button"
 									onClick={() => removeHeader()}
 								>
 									Remove Header
@@ -99,7 +89,7 @@ const CreateTest = () => {
 						</Fragment>
 					) : (
 						<div className={styles['add-rmv-btn']}>
-							<Button type='Button' onClick={() => addHeader()}>
+							<Button type="Button" onClick={() => addHeader()}>
 								Add Header
 							</Button>
 						</div>
@@ -112,7 +102,7 @@ const CreateTest = () => {
 							<Title />
 							<div className={styles['add-rmv-btn']}>
 								<Button
-									type='Button'
+									type="Button"
 									onClick={() => removeTitle()}
 								>
 									Remove Title
@@ -121,7 +111,7 @@ const CreateTest = () => {
 						</Fragment>
 					) : (
 						<div className={styles['add-rmv-btn']}>
-							<Button type='Button' onClick={() => addTitle()}>
+							<Button type="Button" onClick={() => addTitle()}>
 								Add Title
 							</Button>
 						</div>
@@ -133,7 +123,7 @@ const CreateTest = () => {
 							<Instructions />
 							<div className={styles['add-rmv-btn']}>
 								<Button
-									type='Button'
+									type="Button"
 									onClick={() => removeInstructions()}
 								>
 									Remove Instructions
@@ -143,7 +133,7 @@ const CreateTest = () => {
 					) : (
 						<div className={styles['add-rmv-btn']}>
 							<Button
-								type='Button'
+								type="Button"
 								onClick={() => addInstructions()}
 							>
 								Add Instructions
@@ -152,11 +142,13 @@ const CreateTest = () => {
 					)}
 
 					{/*-----------New Section UI--------------*/}
-					{section.map((element, index) => (
+					{testCtx.section.map((element, index) => (
 						<div key={index}>
-							<MCQuestion />
+							{element.section_type === 1 && (
+								<MCQuestion section={element} />
+							)}
 							<Button
-								type='Button'
+								type="Button"
 								onClick={() => removeSection(index)}
 							>
 								Remove Section
@@ -165,7 +157,7 @@ const CreateTest = () => {
 					))}
 					<div className={styles['add-rmv-btn']}>
 						<Button
-							type='Button'
+							type="Button"
 							onClick={() => showSectionModal()}
 						>
 							Add New Section

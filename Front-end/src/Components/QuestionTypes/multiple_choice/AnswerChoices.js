@@ -12,7 +12,7 @@ const AnswerChoices = (props) => {
 	console.log(optionValues);
 	return (
 		<Fragment>
-			{optionValues.map((element, index) => (
+			{props.answerOptions.map((element, index) => (
 				<div key={index}>
 					{index === 0 ? (
 						<label>Answer</label>

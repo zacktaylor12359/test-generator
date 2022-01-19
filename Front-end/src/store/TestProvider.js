@@ -13,16 +13,7 @@ const TestProvider = (props) => {
 	const [instructions, setInstructions] = useState(false);
 	const [enteredInstructions, setEnteredInstructions] = useState('');
 
-	const [section, setSection] = useState([
-		{
-			section_title: false,
-			entered_section_title: '',
-			section_instructions: false,
-			entered_section_instructions: '',
-			section_type: '',
-			section_structure: {},
-		},
-	]);
+	const [section, setSection] = useState([]);
 
 	const addHeaderHandler = () => {
 		setHeader(true);
@@ -66,15 +57,29 @@ const TestProvider = (props) => {
 		setEnteredInstructions(e.target.value);
 	};
 	const addSectionHandler = (sectionObject, sectionIndex) => {
-		setSection((prevState) => {
-			return prevState.splice(sectionIndex, 0, sectionObject);
-		});
+		const updatedSection = [...section];
+		updatedSection.splice(sectionIndex, 0, sectionObject);
+		console.log(updatedSection);
+		setSection(updatedSection);
 	};
 
 	const removeSectionHandler = (sectionIndex) => {
-		setSection((prevState) => {
-			return prevState.splice(sectionIndex, 1);
-		});
+		const updatedSection = [...section];
+		updatedSection.splice(sectionIndex, 1);
+		setSection(updatedSection);
+	};
+
+	const addMCQuestionHandler = (sectionIndex, questionIndex) => {
+		const updatedQuestions = [
+			...section[sectionIndex].section_structure.questions,
+		];
+		const newQuestion = [
+			{
+				question: '',
+				answerOptions: [],
+			},
+		];
+		updatedQuestions.splice(questionIndex);
 	};
 
 	const testContext = {

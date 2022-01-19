@@ -1,9 +1,12 @@
-import { useState, Fragment } from 'react';
-import Modal from './Modal';
-import Button from './Button';
-import styles from './SectionModal.module.css';
+import { useState, Fragment, useContext } from 'react';
+import Modal from '../UI/Modal';
+import Button from '../UI/Button';
+import styles from './AddSectionModal.module.css';
+import TestContext from '../../store/test-context';
 
 const SectionModal = (props) => {
+	const testCtx = useContext(TestContext);
+
 	const [sectionTitle, setSectionTitle] = useState(false);
 	const [sectionInstructions, setSectionInstructions] = useState(false);
 	const [numQuestions, setNumQuestions] = useState(1);
@@ -44,6 +47,35 @@ const SectionModal = (props) => {
 		event.target.value === ''
 			? setNumOptions(0)
 			: setNumOptions(parseInt(event.target.value));
+	};
+
+	const onAddSectionHandler = (event) => {
+		event.preventDefault();
+		if (typeSettings === 'MC') {
+			const questionsArr = [];
+			for (let i = 0; i < numQuestions; i++) {
+				questionsArr.push({
+					question: '',
+					answerOptions: [],
+				});
+
+				for (let j = 0; j < numOptions; j++) {
+					questionsArr[i].answerOptions.push('');
+				}
+			}
+
+			const newSection = {
+				section_title: sectionTitle,
+				section_instructions: sectionInstructions,
+				section_type: typeSettings,
+				section_structure: {
+					num_options: numOptions,
+					questions: questionsArr,
+				},
+			};
+			testCtx.addSection(newSection, testCtx.section.length);
+		}
+		props.onClose();
 	};
 
 	return (
@@ -129,7 +161,7 @@ const SectionModal = (props) => {
 
 				<footer className={styles.actions}>
 					<Button onClick={props.onClose}>Cancel</Button>
-					<Button onClick={props.onClose}>Create Test</Button>
+					<Button onClick={onAddSectionHandler}>Add Section</Button>
 				</footer>
 			</form>
 		</Modal>
