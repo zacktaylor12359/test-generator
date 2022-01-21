@@ -1,23 +1,46 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useContext } from 'react';
+import TestContext from '../../../store/test-context';
 const AnswerChoices = (props) => {
-	console.log(props.numChoices);
-	let tempOptionValues = [];
-	let tempChoice = props.numChoices;
-	for (let i = 0; i < props.numChoices; i++) {
-		tempOptionValues.push('');
-	}
+	const testCtx = useContext(TestContext);
+	const answerOptionChangeHandler = (answerOptionIndex, e) => {
+		console.log('sectionIndex', props.sectionIndex);
+		console.log('questionIndex', props.questionIndex);
+		console.log('answerOptionIndex', answerOptionIndex);
+		console.log('value', e.target.value);
+		testCtx.answerOptionChangeMC(
+			props.sectionIndex,
+			props.questionIndex,
+			answerOptionIndex,
+			e.target.value
+		);
+	};
 
-	const [optionValues, setOptionValues] = useState(tempOptionValues);
-
-	console.log(optionValues);
 	return (
 		<Fragment>
 			{props.answerOptions.map((element, index) => (
 				<div key={index}>
 					{index === 0 ? (
-						<label>Answer</label>
+						<Fragment>
+							<label>Answer</label>
+							<input
+								type="text"
+								value={element}
+								onChange={(e) =>
+									answerOptionChangeHandler(index, e)
+								}
+							/>
+						</Fragment>
 					) : (
-						<label>Option {index + 1}</label>
+						<Fragment>
+							<label>Option {index + 1}</label>
+							<input
+								type="text"
+								value={element}
+								onChange={(e) =>
+									answerOptionChangeHandler(index, e)
+								}
+							/>
+						</Fragment>
 					)}
 				</div>
 			))}

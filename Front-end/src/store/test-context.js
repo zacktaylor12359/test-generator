@@ -22,6 +22,9 @@ const TestContext = createContext({
 	instructionsChange: (e) => {},
 	addSection: (sectionObject, sectionIndex) => {},
 	removeSection: (sectionIndex) => {},
+	addQuestion: (sectionIndex, questionIndex) => {},
+	removeQuestion: (sectionIndex, questionIndex) => {},
+	questionChange: (sectionIndex, questionIndex, newValue) => {},
 });
 
 export default TestContext;

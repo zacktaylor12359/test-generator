@@ -6,7 +6,7 @@ import Title from '../Header/Title';
 import Instructions from '../Header/Instructions';
 import Button from '../UI/Button';
 import MCQuestion from '../QuestionTypes/multiple_choice/MCQuestion';
-import SectionModal from '../ModalContent/AddSectionModal';
+import AddSectionModal from '../ModalContent/AddSectionModal';
 import TestProvider from '../../store/TestProvider';
 import TestContext from '../../store/test-context';
 
@@ -66,7 +66,7 @@ const CreateTest = () => {
 	return (
 		<Fragment>
 			{sectionModal && (
-				<SectionModal
+				<AddSectionModal
 					title="Add New Section"
 					message="Placeholder"
 					onClose={hideSectionModal}
@@ -144,8 +144,14 @@ const CreateTest = () => {
 					{/*-----------New Section UI--------------*/}
 					{testCtx.section.map((element, index) => (
 						<div key={index}>
-							{element.section_type === 1 && (
-								<MCQuestion section={element} />
+							{console.log(element.question_type)}
+							{element.question_type === 'MC' && (
+								<MCQuestion
+									sectionIndex={index}
+									questions={
+										element.question_structure.questions
+									}
+								/>
 							)}
 							<Button
 								type="Button"

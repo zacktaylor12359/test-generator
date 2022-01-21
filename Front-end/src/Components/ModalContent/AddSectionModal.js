@@ -52,23 +52,16 @@ const SectionModal = (props) => {
 	const onAddSectionHandler = (event) => {
 		event.preventDefault();
 		if (typeSettings === 'MC') {
-			const questionsArr = [];
-			for (let i = 0; i < numQuestions; i++) {
-				questionsArr.push({
-					question: '',
-					answerOptions: [],
-				});
-
-				for (let j = 0; j < numOptions; j++) {
-					questionsArr[i].answerOptions.push('');
-				}
-			}
+			const questionsArr = new Array(numQuestions).fill({
+				question: '',
+				answer_options: new Array(numOptions).fill(''),
+			});
 
 			const newSection = {
 				section_title: sectionTitle,
 				section_instructions: sectionInstructions,
-				section_type: typeSettings,
-				section_structure: {
+				question_type: typeSettings,
+				question_structure: {
 					num_options: numOptions,
 					questions: questionsArr,
 				},

@@ -1,36 +1,49 @@
 import { useState, useContext, Fragment } from 'react';
+import reactTextareaAutosize from 'react-textarea-autosize';
 
 import styles from './MCQuestion.module.css';
 import AnswerChoices from './AnswerChoices';
 import Button from '../../UI/Button';
 import TestContext from '../../../store/test-context';
 
+/*
+MC structure
+section [
+	section_title:
+	section_instructions:
+	question_type:
+	question_structure: {
+		num_options:
+		questions: {
+			question:
+			answer_options:
+		}
+	}
+]
+*/
+
 const MCQuestion = (props) => {
 	const testCtx = useContext(TestContext);
 
-	const [numOptions, setNumOptions] = useState(4);
-	const [question, setQuestion] = useState([{ question: '' }]);
-
-	const handleQuestionChange = (index, e) => {
-		let newQuestion = [...question];
-		newQuestion[index][e.target.name] = e.target.value;
-		setQuestion(newQuestion);
+	const addQuestion = (questionIndex) => {
+		testCtx.addQuestion(props.sectionIndex, questionIndex);
 	};
 
-	const addQuestion = () => {
-		setQuestion([...question, { question: '' }]);
+	const removeQuestion = (questionIndex) => {
+		testCtx.removeQuestion(props.sectionIndex, questionIndex);
 	};
 
-	const removeQuestion = (index) => {
-		let newFormValues = [...question];
-		newFormValues.splice(index, 1);
-		setQuestion(newFormValues);
+	const questionChangeHandler = (questionIndex, e) => {
+		testCtx.questionChange(
+			props.sectionIndex,
+			questionIndex,
+			e.target.value
+		);
 	};
 
-	console.log(props.section);
 	return (
 		<Fragment>
-			{props.section.section_structure.questions.map((element, index) => (
+			{props.questions.map((element, index) => (
 				<div key={index}>
 					<label>Question {index + 1}</label>
 					<textarea
@@ -38,9 +51,13 @@ const MCQuestion = (props) => {
 						name="question"
 						className={styles['question-field']}
 						value={element.question || ''}
-						onChange={(e) => handleQuestionChange(index, e)}
+						onChange={(e) => questionChangeHandler(index, e)}
 					/>
-					<AnswerChoices answerOptions={element.answerOptions} />
+					<AnswerChoices
+						sectionIndex={props.sectionIndex}
+						questionIndex={index}
+						answerOptions={element.answer_options}
+					/>
 					<Button
 						className={styles['rmv-btn']}
 						type="Button"
@@ -51,7 +68,10 @@ const MCQuestion = (props) => {
 				</div>
 			))}
 			<div className="Button-section">
-				<Button type="Button" onClick={() => addQuestion()}>
+				<Button
+					type="Button"
+					onClick={() => addQuestion(props.questions.length)}
+				>
 					AddQuestion
 				</Button>
 			</div>
