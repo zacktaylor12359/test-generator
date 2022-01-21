@@ -195,7 +195,7 @@ const TestProvider = (props) => {
 						},
 						...prevSectionArr.slice(sectionIndex + 1),
 					];
-					console.log(updatedSection);
+					console.log(newValue);
 					return updatedSection;
 				default:
 					return prevSectionArr;

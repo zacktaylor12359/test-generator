@@ -5,6 +5,7 @@ import styles from './MCQuestion.module.css';
 import AnswerChoices from './AnswerChoices';
 import Button from '../../UI/Button';
 import TestContext from '../../../store/test-context';
+import QuestionInput from './QuestionInput';
 
 /*
 MC structure
@@ -14,10 +15,10 @@ section [
 	question_type:
 	question_structure: {
 		num_options:
-		questions: {
+		questions: [{
 			question:
 			answer_options:
-		}
+		}]
 	}
 ]
 */
@@ -45,13 +46,10 @@ const MCQuestion = (props) => {
 		<Fragment>
 			{props.questions.map((element, index) => (
 				<div key={index}>
-					<label>Question {index + 1}</label>
-					<textarea
-						type="text"
-						name="question"
-						className={styles['question-field']}
-						value={element.question || ''}
-						onChange={(e) => questionChangeHandler(index, e)}
+					<QuestionInput
+						sectionIndex={props.sectionIndex}
+						questionIndex={index}
+						question={element.question}
 					/>
 					<AnswerChoices
 						sectionIndex={props.sectionIndex}
@@ -60,16 +58,16 @@ const MCQuestion = (props) => {
 					/>
 					<Button
 						className={styles['rmv-btn']}
-						type="Button"
+						type='Button'
 						onClick={() => removeQuestion(index)}
 					>
 						Remove Question
 					</Button>
 				</div>
 			))}
-			<div className="Button-section">
+			<div className='Button-section'>
 				<Button
-					type="Button"
+					type='Button'
 					onClick={() => addQuestion(props.questions.length)}
 				>
 					AddQuestion

@@ -7,12 +7,6 @@ const AnswerChoices = (props) => {
 		console.log('questionIndex', props.questionIndex);
 		console.log('answerOptionIndex', answerOptionIndex);
 		console.log('value', e.target.value);
-		testCtx.answerOptionChangeMC(
-			props.sectionIndex,
-			props.questionIndex,
-			answerOptionIndex,
-			e.target.value
-		);
 	};
 
 	return (
@@ -22,24 +16,12 @@ const AnswerChoices = (props) => {
 					{index === 0 ? (
 						<Fragment>
 							<label>Answer</label>
-							<input
-								type="text"
-								value={element}
-								onChange={(e) =>
-									answerOptionChangeHandler(index, e)
-								}
-							/>
+							<input type='text' />
 						</Fragment>
 					) : (
 						<Fragment>
 							<label>Option {index + 1}</label>
-							<input
-								type="text"
-								value={element}
-								onChange={(e) =>
-									answerOptionChangeHandler(index, e)
-								}
-							/>
+							<input type='text' />
 						</Fragment>
 					)}
 				</div>
