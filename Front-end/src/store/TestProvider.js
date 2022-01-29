@@ -4,16 +4,21 @@ import TestContext from './test-context';
 
 /*
 MC structure
-section[
+section [
+	id: 
 	section_title:
 	section_instructions:
 	question_type:
 	question_structure: {
 		num_options:
-		questions: {
+		questions: [{
+			id:
 			question:
-			answer_options:
-		}
+			answer_options: [{
+				id: 
+				option: 
+			}]
+		}]
 	}
 ]
 */
@@ -81,6 +86,7 @@ const TestProvider = (props) => {
 			];
 			return updatedSection;
 		});
+		console.log(section);
 	};
 
 	const removeSectionHandler = (sectionIndex) => {
@@ -118,6 +124,7 @@ const TestProvider = (props) => {
 								questions: [
 									...prevQuestionArr.slice(0, questionIndex),
 									{
+										id: questionIndex,
 										question: '',
 										answer_options: new Array(
 											prevNumOptions

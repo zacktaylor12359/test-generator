@@ -5,12 +5,7 @@ const QuestionInput = (props) => {
 	const testCtx = useContext(TestContext);
 	const questionInputRef = useRef();
 
-	return (
-		<Fragment>
-			<label>Question {props.questionIndex + 1}</label>
-			<textarea type='text' name='question' ref={questionInputRef} />
-		</Fragment>
-	);
+	return <Fragment></Fragment>;
 };
 
 export default QuestionInput;

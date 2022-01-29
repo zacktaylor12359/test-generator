@@ -1,4 +1,6 @@
-import { useState, useContext, Fragment } from 'react';
+import { useContext, Fragment } from 'react';
+import { State, useState, none } from '@hookstate/core';
+import { TestState } from '../../../store/sectionState.ts';
 import reactTextareaAutosize from 'react-textarea-autosize';
 
 import styles from './MCQuestion.module.css';
@@ -10,22 +12,29 @@ import QuestionInput from './QuestionInput';
 /*
 MC structure
 section [
+	id: 
 	section_title:
 	section_instructions:
 	question_type:
 	question_structure: {
 		num_options:
 		questions: [{
+			id:
 			question:
-			answer_options:
+			answer_options: [{
+				id: 
+				option: 
+			}]
 		}]
 	}
 ]
 */
 
 const MCQuestion = (props) => {
+	console.log('cunt');
 	const testCtx = useContext(TestContext);
-
+	let testState = useState(props.question_structure);
+	console.log('cunt', testState);
 	const addQuestion = (questionIndex) => {
 		testCtx.addQuestion(props.sectionIndex, questionIndex);
 	};
@@ -34,28 +43,13 @@ const MCQuestion = (props) => {
 		testCtx.removeQuestion(props.sectionIndex, questionIndex);
 	};
 
-	const questionChangeHandler = (questionIndex, e) => {
-		testCtx.questionChange(
-			props.sectionIndex,
-			questionIndex,
-			e.target.value
-		);
-	};
-
 	return (
 		<Fragment>
-			{props.questions.map((element, index) => (
-				<div key={index}>
-					<QuestionInput
-						sectionIndex={props.sectionIndex}
-						questionIndex={index}
-						question={element.question}
-					/>
-					<AnswerChoices
-						sectionIndex={props.sectionIndex}
-						questionIndex={index}
-						answerOptions={element.answer_options}
-					/>
+			{testState.questions.map((element, index) => (
+				<div key={element.id.value}>
+					<label>Question {props.questionIndex + 1}</label>
+					<textarea type='text' name='question' />
+					<AnswerChoices answerOptions={element.answer_options} />
 					<Button
 						className={styles['rmv-btn']}
 						type='Button'

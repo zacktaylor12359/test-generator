@@ -1,13 +1,15 @@
 import styles from './Instructions.module.css';
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
+import { useTestState } from '../../store/sectionState.ts';
 import TextareaAutosize from 'react-textarea-autosize';
 import TestContext from '../../store/test-context';
 
 const Title = () => {
 	const testCtx = useContext(TestContext);
+	const testState = useTestState();
 
 	const instructionsChangeHandler = (e) => {
-		testCtx.instructionsChange(e);
+		testState.entered_instructions.set(e.target.value);
 	};
 
 	return (
@@ -17,7 +19,7 @@ const Title = () => {
 				className={styles['instructions']}
 				autoFocus
 				minRows={1}
-				value={testCtx.entered_instructions}
+				value={testState.entered_instructions.get()}
 				onChange={instructionsChangeHandler}
 				placeholder='Instructions'
 			/>

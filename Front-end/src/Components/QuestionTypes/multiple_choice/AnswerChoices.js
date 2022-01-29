@@ -1,18 +1,13 @@
 import { Fragment, useContext } from 'react';
+import { useState } from '@hookstate/core';
 import TestContext from '../../../store/test-context';
 const AnswerChoices = (props) => {
-	const testCtx = useContext(TestContext);
-	const answerOptionChangeHandler = (answerOptionIndex, e) => {
-		console.log('sectionIndex', props.sectionIndex);
-		console.log('questionIndex', props.questionIndex);
-		console.log('answerOptionIndex', answerOptionIndex);
-		console.log('value', e.target.value);
-	};
+	let answerOptionsState = useState(props.answerOptions);
 
 	return (
 		<Fragment>
-			{props.answerOptions.map((element, index) => (
-				<div key={index}>
+			{answerOptionsState.map((element, index) => (
+				<div key={element.id.value}>
 					{index === 0 ? (
 						<Fragment>
 							<label>Answer</label>

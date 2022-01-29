@@ -1,26 +1,26 @@
-import { useContext, Fragment } from 'react';
+import { Fragment } from 'react';
+import { useTestState } from '../../store/sectionState.ts';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import styles from './Header.module.css';
 import Button from '../UI/Button';
-import TestContext from '../../store/test-context';
 
 const Header = () => {
-	const testCtx = useContext(TestContext);
+	const testState = useTestState();
 
 	const alignRightBtn = () => {
-		testCtx.alignRightBtn();
+		testState.header_left_alignment.set(false);
 	};
 	const alignLeftBtn = () => {
-		testCtx.alignLeftBtn();
+		testState.header_left_alignment.set(true);
 	};
 	const headerChangeHandler = (e) => {
-		testCtx.headerChange(e);
+		testState.entered_header.set(e.target.value);
 	};
 
 	return (
 		<Fragment>
-			{testCtx.header_left_alignment ? (
+			{testState.header_left_alignment.get() ? (
 				<Fragment>
 					<div className={styles['control']}>
 						<TextareaAutosize
@@ -28,7 +28,7 @@ const Header = () => {
 							className={`${styles['header']} ${styles['header-left']}`}
 							autoFocus
 							minRows={1}
-							value={testCtx.entered_header}
+							value={testState.entered_header.get()}
 							onChange={headerChangeHandler}
 							placeholder='Header'
 						/>
@@ -52,7 +52,7 @@ const Header = () => {
 							autoFocus
 							minRows={1}
 							placeholder='Header'
-							value={testCtx.entered_header}
+							value={testState.entered_header.get()}
 							onChange={headerChangeHandler}
 						/>
 					</div>

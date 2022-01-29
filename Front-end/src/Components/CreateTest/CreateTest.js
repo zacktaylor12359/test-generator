@@ -1,4 +1,7 @@
-import { useState, useContext, Fragment } from 'react';
+import React, { useContext, Fragment } from 'react';
+import { useState, none } from '@hookstate/core';
+
+import { useTestState } from '../../store/sectionState.ts';
 import styles from './CreateTest.module.css';
 import Card from '../UI/Card';
 import Header from '../Header/Header';
@@ -12,47 +15,45 @@ import TestContext from '../../store/test-context';
 
 const CreateTest = () => {
 	const testCtx = useContext(TestContext);
+	const testState = useTestState();
 
 	//Section states
-	const [section, setSection] = useState([]);
-	const [sectionModal, setSectionModal] = useState(false);
+	//const [section, setSection] = useState([]);
+	const [sectionModal, setSectionModal] = React.useState(false);
 
 	//Header functions
 	const removeHeader = () => {
-		testCtx.removeHeader();
+		testState.header.set(false);
 	};
 	const addHeader = () => {
-		testCtx.addHeader();
+		testState.header.set(true);
 	};
 
 	//Title functions
 	const removeTitle = () => {
-		testCtx.removeTitle();
+		testState.title.set(false);
 	};
 	const addTitle = () => {
-		testCtx.addTitle();
+		testState.title.set(true);
 	};
 
 	//Instruction functions
 	const removeInstructions = () => {
-		testCtx.removeInstructions();
+		testState.instructions.set(false);
 	};
 	const addInstructions = () => {
-		testCtx.addInstructions();
+		testState.instructions.set(true);
 	};
 
 	//Section functions
-	const removeSection = (index) => {
-		testCtx.removeSection(index);
-	};
-	const addSection = () => {
-		setSection([...section, {}]);
-	};
 	const showSectionModal = () => {
 		setSectionModal(true);
 	};
 	const hideSectionModal = () => {
 		setSectionModal(false);
+	};
+	const removeSection = (section) => {
+		section.set(none);
 	};
 
 	//Submit function
@@ -62,115 +63,127 @@ const CreateTest = () => {
 	// 	setNumOptions(3);
 	// 	setCompKey(compKey + 1);
 	// };
-
 	return (
 		<Fragment>
-			{sectionModal && (
-				<AddSectionModal
-					title="Add New Section"
-					message="Placeholder"
-					onClose={hideSectionModal}
-				/>
-			)}
-			<form>
-				<Card className={styles['test-form']}>
-					{/*-----------Header UI--------------*/}
-					{testCtx.header ? (
-						<Fragment>
-							<Header />
-							<div className={styles['add-rmv-btn']}>
-								<Button
-									type="Button"
-									onClick={() => removeHeader()}
-								>
-									Remove Header
-								</Button>
-							</div>
-						</Fragment>
-					) : (
-						<div className={styles['add-rmv-btn']}>
-							<Button type="Button" onClick={() => addHeader()}>
-								Add Header
-							</Button>
-						</div>
+			{testState.promised ? (
+				<Fragment>
+					<p>loading</p>
+				</Fragment>
+			) : (
+				<Fragment>
+					{sectionModal && (
+						<AddSectionModal
+							title='Add New Section'
+							message='Placeholder'
+							onClose={hideSectionModal}
+						/>
 					)}
-
-					{/*-----------Title UI--------------*/}
-
-					{testCtx.title ? (
-						<Fragment>
-							<Title />
-							<div className={styles['add-rmv-btn']}>
-								<Button
-									type="Button"
-									onClick={() => removeTitle()}
-								>
-									Remove Title
-								</Button>
-							</div>
-						</Fragment>
-					) : (
-						<div className={styles['add-rmv-btn']}>
-							<Button type="Button" onClick={() => addTitle()}>
-								Add Title
-							</Button>
-						</div>
-					)}
-
-					{/*-----------Instructions UI--------------*/}
-					{testCtx.instructions ? (
-						<Fragment>
-							<Instructions />
-							<div className={styles['add-rmv-btn']}>
-								<Button
-									type="Button"
-									onClick={() => removeInstructions()}
-								>
-									Remove Instructions
-								</Button>
-							</div>
-						</Fragment>
-					) : (
-						<div className={styles['add-rmv-btn']}>
-							<Button
-								type="Button"
-								onClick={() => addInstructions()}
-							>
-								Add Instructions
-							</Button>
-						</div>
-					)}
-
-					{/*-----------New Section UI--------------*/}
-					{testCtx.section.map((element, index) => (
-						<div key={index}>
-							{console.log(element.question_type)}
-							{element.question_type === 'MC' && (
-								<MCQuestion
-									sectionIndex={index}
-									questions={
-										element.question_structure.questions
-									}
-								/>
+					<form>
+						<Card className={styles['test-form']}>
+							{/*-----------Header UI--------------*/}
+							{testState.header.get() ? (
+								<Fragment>
+									<Header />
+									<div className={styles['add-rmv-btn']}>
+										<Button
+											type='Button'
+											onClick={() => removeHeader()}
+										>
+											Remove Header
+										</Button>
+									</div>
+								</Fragment>
+							) : (
+								<div className={styles['add-rmv-btn']}>
+									<Button
+										type='Button'
+										onClick={() => addHeader()}
+									>
+										Add Header
+									</Button>
+								</div>
 							)}
-							<Button
-								type="Button"
-								onClick={() => removeSection(index)}
-							>
-								Remove Section
-							</Button>
-						</div>
-					))}
-					<div className={styles['add-rmv-btn']}>
-						<Button
-							type="Button"
-							onClick={() => showSectionModal()}
-						>
-							Add New Section
-						</Button>
-					</div>
-				</Card>
-			</form>
+
+							{/*-----------Title UI--------------*/}
+
+							{testState.title.get() ? (
+								<Fragment>
+									<Title />
+									<div className={styles['add-rmv-btn']}>
+										<Button
+											type='Button'
+											onClick={() => removeTitle()}
+										>
+											Remove Title
+										</Button>
+									</div>
+								</Fragment>
+							) : (
+								<div className={styles['add-rmv-btn']}>
+									<Button
+										type='Button'
+										onClick={() => addTitle()}
+									>
+										Add Title
+									</Button>
+								</div>
+							)}
+
+							{/*-----------Instructions UI--------------*/}
+							{testState.instructions.get() ? (
+								<Fragment>
+									<Instructions />
+									<div className={styles['add-rmv-btn']}>
+										<Button
+											type='Button'
+											onClick={() => removeInstructions()}
+										>
+											Remove Instructions
+										</Button>
+									</div>
+								</Fragment>
+							) : (
+								<div className={styles['add-rmv-btn']}>
+									<Button
+										type='Button'
+										onClick={() => addInstructions()}
+									>
+										Add Instructions
+									</Button>
+								</div>
+							)}
+
+							{/*-----------New Section UI--------------*/}
+							{testState.section.map((element, index) => (
+								<div key={element.id.value}>
+									{console.log('thing', element.id.value)}
+									{element.question_type.value === 'MC' && (
+										<MCQuestion
+											question_structure={
+												element.question_structure
+											}
+										/>
+									)}
+									<Button
+										type='Button'
+										onClick={() => removeSection(element)}
+									>
+										Remove
+									</Button>
+								</div>
+							))}
+							<div className={styles['add-rmv-btn']}>
+								<Button
+									type='Button'
+									onClick={() => showSectionModal()}
+								>
+									Add New Section
+								</Button>
+							</div>
+						</Card>
+					</form>
+				</Fragment>
+			)}
 		</Fragment>
 	);
 };
