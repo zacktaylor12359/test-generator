@@ -42,11 +42,11 @@ interface MCSection {
 		questions: [
 			{
 				id: number;
-				question: string;
+				entered_question: string;
 				answer_options: [
 					{
 						id: number;
-						option: string;
+						entered_option: string;
 					}
 				];
 			}
@@ -83,3 +83,5 @@ export const addMCSection = (section: MCSection) => {
 		setTimeout(() => console.log(state.section.value), 1000);
 	});
 };
+
+setTimeout(() => console.log(), 10000);

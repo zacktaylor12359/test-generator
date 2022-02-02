@@ -55,6 +55,16 @@ const SectionModal = (props) => {
 	const onAddSectionHandler = (event) => {
 		event.preventDefault();
 
+		let new_id = 1;
+
+		while (
+			testState.section.findIndex(
+				// eslint-disable-next-line no-loop-func
+				(i) => i.id.get() === new_id
+			) !== -1
+		) {
+			new_id += 1;
+		}
 		if (typeSettings === 'MC') {
 			const questionsArr = [];
 			const answersArr = [];
@@ -62,7 +72,7 @@ const SectionModal = (props) => {
 			for (let i = 1; i <= numOptions; i++) {
 				answersArr.push({
 					id: i,
-					option: '',
+					entered_option: '',
 				});
 			}
 			for (let i = 1; i <= numQuestions; i++) {
@@ -73,7 +83,7 @@ const SectionModal = (props) => {
 			}
 
 			const newSection = {
-				id: testState.section.length + 1,
+				id: new_id,
 				section_title: sectionTitle,
 				section_instructions: sectionInstructions,
 				question_type: typeSettings,
