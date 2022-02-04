@@ -1,12 +1,11 @@
 import styles from './Title.module.css';
-import { useContext } from 'react';
-import TestContext from '../../store/test-context';
+import { useTestState } from '../../store/sectionState.ts';
 
 const Title = () => {
-	const testCtx = useContext(TestContext);
+	const testState = useTestState();
 
 	const titleChangeHandler = (e) => {
-		testCtx.titleChange(e);
+		testState.entered_title.set(e.target.value);
 	};
 
 	return (
@@ -14,7 +13,7 @@ const Title = () => {
 			<input
 				type='text'
 				placeholder='Title'
-				value={testCtx.entered_title}
+				value={testState.entered_title.value}
 				onChange={titleChangeHandler}
 			/>
 		</div>

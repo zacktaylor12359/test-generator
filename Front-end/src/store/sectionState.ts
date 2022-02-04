@@ -77,10 +77,10 @@ export const useTestState = () => {
 	return useState(state);
 };
 
-export const addMCSection = (section: MCSection) => {
-	state.section[state.section.length].set(section);
+export const addMCSection = (section: MCSection, index: number) => {
+	state.section[index].set(section);
 	new Promise(() => {
-		setTimeout(() => console.log(state.section.value), 1000);
+		setTimeout(() => console.log(state.section.value, index), 1000);
 	});
 };
 

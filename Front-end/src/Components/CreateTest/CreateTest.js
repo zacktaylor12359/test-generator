@@ -10,16 +10,16 @@ import Instructions from '../Header/Instructions';
 import Button from '../UI/Button';
 import MCQuestion from '../QuestionTypes/multiple_choice/MCQuestion';
 import AddSectionModal from '../ModalContent/AddSectionModal';
-import TestProvider from '../../store/TestProvider';
-import TestContext from '../../store/test-context';
+import RemoveSectionModal from '../ModalContent/RemoveSectionModal';
 
 const CreateTest = () => {
-	const testCtx = useContext(TestContext);
 	const testState = useTestState();
 
 	//Section states
 	//const [section, setSection] = useState([]);
-	const [sectionModal, setSectionModal] = React.useState(false);
+	const [addSectionModal, setAddSectionModal] = React.useState(false);
+	const [removeSectionModal, setRemoveSectionModal] = React.useState(false);
+	const [editSectionIndex, setEditSectionIndex] = React.useState(-1);
 
 	//Header functions
 	const removeHeader = () => {
@@ -46,14 +46,21 @@ const CreateTest = () => {
 	};
 
 	//Section functions
-	const showSectionModal = () => {
-		setSectionModal(true);
+	const showAddSectionModal = (sectionIndex) => {
+		setEditSectionIndex(sectionIndex);
+		setAddSectionModal(true);
 	};
-	const hideSectionModal = () => {
-		setSectionModal(false);
+	const hideAddSectionModal = () => {
+		setEditSectionIndex(-1);
+		setAddSectionModal(false);
 	};
-	const removeSection = (section) => {
-		section.set(none);
+	const showRemoveSectionModal = (sectionIndex) => {
+		setEditSectionIndex(sectionIndex);
+		setRemoveSectionModal(true);
+	};
+	const hideRemoveSectionModal = () => {
+		setEditSectionIndex(-1);
+		setRemoveSectionModal(false);
 	};
 
 	//Submit function
@@ -71,11 +78,18 @@ const CreateTest = () => {
 				</Fragment>
 			) : (
 				<Fragment>
-					{sectionModal && (
+					{addSectionModal && (
 						<AddSectionModal
-							title='Add New Section'
-							message='Placeholder'
-							onClose={hideSectionModal}
+							index={editSectionIndex}
+							title="Add New Section"
+							onClose={hideAddSectionModal}
+						/>
+					)}
+					{removeSectionModal && (
+						<RemoveSectionModal
+							index={editSectionIndex}
+							title="Remove Section"
+							onClose={hideRemoveSectionModal}
 						/>
 					)}
 					<form>
@@ -86,7 +100,7 @@ const CreateTest = () => {
 									<Header />
 									<div className={styles['add-rmv-btn']}>
 										<Button
-											type='Button'
+											type="Button"
 											onClick={() => removeHeader()}
 										>
 											Remove Header
@@ -96,7 +110,7 @@ const CreateTest = () => {
 							) : (
 								<div className={styles['add-rmv-btn']}>
 									<Button
-										type='Button'
+										type="Button"
 										onClick={() => addHeader()}
 									>
 										Add Header
@@ -111,7 +125,7 @@ const CreateTest = () => {
 									<Title />
 									<div className={styles['add-rmv-btn']}>
 										<Button
-											type='Button'
+											type="Button"
 											onClick={() => removeTitle()}
 										>
 											Remove Title
@@ -121,7 +135,7 @@ const CreateTest = () => {
 							) : (
 								<div className={styles['add-rmv-btn']}>
 									<Button
-										type='Button'
+										type="Button"
 										onClick={() => addTitle()}
 									>
 										Add Title
@@ -135,7 +149,7 @@ const CreateTest = () => {
 									<Instructions />
 									<div className={styles['add-rmv-btn']}>
 										<Button
-											type='Button'
+											type="Button"
 											onClick={() => removeInstructions()}
 										>
 											Remove Instructions
@@ -145,7 +159,7 @@ const CreateTest = () => {
 							) : (
 								<div className={styles['add-rmv-btn']}>
 									<Button
-										type='Button'
+										type="Button"
 										onClick={() => addInstructions()}
 									>
 										Add Instructions
@@ -165,17 +179,23 @@ const CreateTest = () => {
 										/>
 									)}
 									<Button
-										type='Button'
-										onClick={() => removeSection(element)}
+										type="Button"
+										onClick={() =>
+											showRemoveSectionModal(index)
+										}
 									>
-										Remove
+										Remove Section
 									</Button>
 								</div>
 							))}
 							<div className={styles['add-rmv-btn']}>
 								<Button
-									type='Button'
-									onClick={() => showSectionModal()}
+									type="Button"
+									onClick={() =>
+										showAddSectionModal(
+											testState.section.length
+										)
+									}
 								>
 									Add New Section
 								</Button>

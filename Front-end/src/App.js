@@ -2,7 +2,6 @@ import CreateTest from './Components/CreateTest/CreateTest';
 import MCQuestion from './Components/QuestionTypes/multiple_choice/MCQuestion';
 import styles from './App.module.css';
 import { Fragment } from 'react';
-import TestProvider from './store/TestProvider';
 
 function App() {
 	return (
@@ -13,9 +12,7 @@ function App() {
 		//     <button>Upload Test Document</button>
 		// </div>
 
-		<TestProvider>
-			<CreateTest />
-		</TestProvider>
+		<CreateTest />
 	);
 }
 

@@ -1,11 +1,11 @@
-import { useContext, useRef, Fragment } from 'react';
+import React, { useRef, useMemo, Fragment } from 'react';
 import { State, useState, none } from '@hookstate/core';
 import { useTestState } from '../../../store/sectionState.ts';
 import reactTextareaAutosize from 'react-textarea-autosize';
 
 import styles from './MCQuestion.module.css';
 import Button from '../../UI/Button';
-import TestContext from '../../../store/test-context';
+import AnswerChoices from './AnswerChoice';
 
 /*
 MC structure
@@ -28,8 +28,9 @@ section [
 ]
 */
 
-const Question = (props) => {
-	const questionState = useState(props.question);
+export const Question = React.memo((props) => {
+	const { question } = props;
+	const questionState = useState(question);
 	const questionInputRef = useRef();
 	const testState = useTestState();
 
@@ -37,11 +38,6 @@ const Question = (props) => {
 		questionState.set(none);
 	};
 	const onBlurHandler = () => {
-		console.log('question state', questionState.entered_question.get());
-		console.log(
-			'global',
-			testState.section[0].question_structure.questions[0].entered_question.get()
-		);  
 		questionState.entered_question.set(questionInputRef.current.value);
 	};
 
@@ -52,51 +48,18 @@ const Question = (props) => {
 			<AnswerChoices answerOptions={props.question.answer_options} />
 			<Button
 				className={styles['rmv-btn']}
-				type='Button'
+				type="Button"
 				onClick={() => removeQuestion(props.index)}
 			>
 				Remove Question
 			</Button>
 		</Fragment>
 	);
-};
-
-const Answer = (props) => {
-	const answerState = useState(props.answer);
-	const answerInputRef = useRef();
-
-	const onBlurHandler = () => {
-		console.log('what the fuck!!!!!!!!!');
-		answerState.entered_option.set(answerInputRef.current.value);
-	};
-
-	return (
-		<Fragment>
-			{props.index === 0 ? (
-				<Fragment>
-					<label>Answer</label>
-					<input
-						ref={answerInputRef}
-						onBlur={onBlurHandler}
-						type='text'
-					/>
-				</Fragment>
-			) : (
-				<Fragment>
-					<label>Option {props.index + 1}</label>
-					<input
-						ref={answerInputRef}
-						onBlur={onBlurHandler}
-						type='text'
-					/>
-				</Fragment>
-			)}
-		</Fragment>
-	);
-};
+});
 
 const MCQuestion = (props) => {
-	const sectionState = useState(props.question_structure);
+	const { question_structure } = props;
+	const sectionState = useState(question_structure);
 	const addQuestion = () => {
 		let new_id = 1;
 		while (
@@ -124,32 +87,23 @@ const MCQuestion = (props) => {
 		sectionState.questions[sectionState.questions.length].set(newQuestion);
 	};
 
+	const questions = useMemo(() => {
+		return sectionState.questions.map((element, index) => (
+			<div key={element.id.value}>
+				{console.log('question Rendered')}
+				<Question question={element} index={index} />
+			</div>
+		));
+	});
+
 	return (
 		<Fragment>
-			{sectionState.questions.map((element, index) => (
-				<div key={element.id.value}>
-					<Question question={element} index={index} />
-				</div>
-			))}
-			<div className='Button-section'>
-				<Button type='Button' onClick={addQuestion}>
+			{questions}
+			<div className="Button-section">
+				<Button type="Button" onClick={addQuestion}>
 					AddQuestion
 				</Button>
 			</div>
-		</Fragment>
-	);
-};
-
-const AnswerChoices = (props) => {
-	let answerOptionsState = useState(props.answerOptions);
-
-	return (
-		<Fragment>
-			{answerOptionsState.map((element, index) => (
-				<div key={element.id.value}>
-					<Answer answer={element} index={index} />
-				</div>
-			))}
 		</Fragment>
 	);
 };
