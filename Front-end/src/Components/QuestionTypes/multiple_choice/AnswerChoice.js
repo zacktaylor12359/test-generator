@@ -43,7 +43,7 @@ const AnswerChoices = (props) => {
 		<Fragment>
 			{answerOptionsState.map((element, index) => (
 				<div key={element.id.value}>
-					{console.log('answerChoice Rendered')};
+					{console.log('answerChoice Rendered')}
 					<Answer answer={element} index={index} />
 				</div>
 			))}

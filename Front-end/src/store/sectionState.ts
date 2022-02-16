@@ -79,9 +79,5 @@ export const useTestState = () => {
 
 export const addMCSection = (section: MCSection, index: number) => {
 	state.section[index].set(section);
-	new Promise(() => {
-		setTimeout(() => console.log(state.section.value, index), 1000);
-	});
 };
 
-setTimeout(() => console.log(), 10000);

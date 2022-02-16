@@ -28,6 +28,15 @@ section [
 ]
 */
 
+export const Questions = (props) => {
+	return props.questions.map((element, index) => (
+		<div key={element.id.value}>
+			{console.log('question Rendered')}
+			<Question question={element} index={index} />
+		</div>
+	));
+};
+
 export const Question = React.memo((props) => {
 	const { question } = props;
 	const questionState = useState(question);
@@ -38,6 +47,7 @@ export const Question = React.memo((props) => {
 		questionState.set(none);
 	};
 	const onBlurHandler = () => {
+		console.log('onBlur called');
 		questionState.entered_question.set(questionInputRef.current.value);
 	};
 
@@ -87,18 +97,9 @@ const MCQuestion = (props) => {
 		sectionState.questions[sectionState.questions.length].set(newQuestion);
 	};
 
-	const questions = useMemo(() => {
-		return sectionState.questions.map((element, index) => (
-			<div key={element.id.value}>
-				{console.log('question Rendered')}
-				<Question question={element} index={index} />
-			</div>
-		));
-	});
-
 	return (
 		<Fragment>
-			{questions}
+			<Questions questions={sectionState.questions} />
 			<div className="Button-section">
 				<Button type="Button" onClick={addQuestion}>
 					AddQuestion

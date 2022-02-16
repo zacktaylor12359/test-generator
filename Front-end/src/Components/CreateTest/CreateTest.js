@@ -1,5 +1,6 @@
 import React, { useContext, Fragment } from 'react';
 import { useState, none } from '@hookstate/core';
+import { FixedSizeList as List } from 'react-window';
 
 import { useTestState } from '../../store/sectionState.ts';
 import styles from './CreateTest.module.css';
@@ -20,6 +21,26 @@ const CreateTest = () => {
 	const [addSectionModal, setAddSectionModal] = React.useState(false);
 	const [removeSectionModal, setRemoveSectionModal] = React.useState(false);
 	const [editSectionIndex, setEditSectionIndex] = React.useState(-1);
+
+	const sectionList = testState.promised
+		? null
+		: testState.section.map((element, index) => {
+				return (
+					<div key={element.id.value}>
+						{element.question_type.value === 'MC' && (
+							<MCQuestion
+								question_structure={element.question_structure}
+							/>
+						)}
+						<Button
+							type="Button"
+							onClick={() => showRemoveSectionModal(index)}
+						>
+							Remove Section
+						</Button>
+					</div>
+				);
+		  });
 
 	//Header functions
 	const removeHeader = () => {
@@ -168,26 +189,8 @@ const CreateTest = () => {
 							)}
 
 							{/*-----------New Section UI--------------*/}
-							{testState.section.map((element, index) => (
-								<div key={element.id.value}>
-									{console.log('thing', element.id.value)}
-									{element.question_type.value === 'MC' && (
-										<MCQuestion
-											question_structure={
-												element.question_structure
-											}
-										/>
-									)}
-									<Button
-										type="Button"
-										onClick={() =>
-											showRemoveSectionModal(index)
-										}
-									>
-										Remove Section
-									</Button>
-								</div>
-							))}
+
+							{sectionList}
 							<div className={styles['add-rmv-btn']}>
 								<Button
 									type="Button"
