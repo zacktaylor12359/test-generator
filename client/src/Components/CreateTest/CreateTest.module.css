@@ -1,0 +1,14 @@
+.test-form {
+	background-color: white;
+	width: 55rem;
+	padding-right: 96px;
+	padding-left: 96px;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+}
+
+.add-rmv-btn {
+	display: block;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
