@@ -1,0 +1,12 @@
+name: Docker API Builds
+
+on: [push]
+
+jobs: 
+  build:
+    runs-on: ubuntu-latest  
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run generate test service container
+      run: |
+        docker build ./generate-test-service -t generate-test-service
