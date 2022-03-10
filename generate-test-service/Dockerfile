@@ -1,6 +1,11 @@
 # start by pulling the python image
 FROM alpine:latest
 
+ENV VIRTUAL_ENV=./venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+
 # copy the requirements file into the image
 COPY ./requirements.txt /app/requirements.txt
 
