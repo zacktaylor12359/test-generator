@@ -18,3 +18,4 @@ jobs:
           remote_branch: "main"
           usedocker: true
           appdir: "generate-test-service"
+          stack: "container"
