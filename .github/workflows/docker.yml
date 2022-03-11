@@ -6,18 +6,15 @@ jobs:
   build:
     runs-on: ubuntu-latest  
     steps:
+    - name: Check out repository
     - uses: actions/checkout@v2
-    - name: docker login
-      env:
-        DOCKER_USER: ${{ secrets.DOCKER_USER }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      run: |
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-      
-    - name: Run generate test service container
-      run: |
-        docker build ./generate-test-service -t generate-test-service
-      
-    - name: docker push
-      run: |
-        docker push generate-test-service
+    
+    - name: Deploy to Heroku
+      uses: akhileshns/heroku-deploy@v3.12.12
+      with: 
+        heroku_api_key: ${{secrets.GENERATE_TEST_API_KEY}}
+        heroku_app_name: "generate-test-service" 
+        heroku_email: "zacktaylor159@gmail.com"
+        remote_branch: "main"
+        usedocker: true
+        appdir: "generate-test-service"
