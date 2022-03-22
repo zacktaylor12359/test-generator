@@ -16,6 +16,6 @@ jobs:
                   heroku_app_name: 'generate-test-service'
                   heroku_email: 'zacktaylor159@gmail.com'
                   remote_branch: 'main'
-                  stack: 'container'
                   usedocker: true
                   appdir: 'generate-test-service'
+                  stack: 'container'
