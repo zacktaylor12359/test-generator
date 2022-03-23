@@ -1,1 +1,3 @@
-generate-test-service: Dockerfile
+build:
+    docker:
+        web: ./generate-test-service/Dockerfile
