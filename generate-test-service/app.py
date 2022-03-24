@@ -39,6 +39,10 @@ def changeroute(dollar, cents):
     result = change(float(amount))
     return jsonify(result)
 
+@app.route('/thing/<thing>')
+def testroute(thing):
+    return 'heres the thing ${thing}'
+
 
 if __name__ == '__main__':
     port = os.environ.get("PORT", 5000)
