@@ -30,8 +30,8 @@ def change(amount):
 @app.route('/')
 def hello():
     """Return a friendly HTTP greeting."""
-    print("I am inside hello world")
-    return 'Hello World! I me: /change'
+    print("I am ihello world")
+    return 'Hello ld! I mdkdkdke: /change'
 
 
 @app.route('/change/<dollar>/<cents>')
