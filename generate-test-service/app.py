@@ -1,6 +1,10 @@
-from flask import Flask
-from flask import jsonify
+from flask import Flask, request, send_file, send_from_directory, jsonify
+from pathlib import Path
+from docx import Documment
+from docx.shared import Inches
 import os
+import zipfile
+import random
 app = Flask(__name__)
 
 
@@ -31,7 +35,7 @@ def change(amount):
 def hello():
     """Return a friendly HTTP greeting."""
     print("I am ihello world")
-    return 'Hello ld! I mdkdkdke: /change'
+    return 'I make change and route /change'
 
 
 @app.route('/change/<dollar>/<cents>')
@@ -42,9 +46,54 @@ def changeroute(dollar, cents):
     return jsonify(result)
 
 
-@app.route('/thing/<thing>')
-def testroute(thing):
-    return f'heres the thing ${thing}'
+@app.route('/thing', methods=['POST'])
+def testroute():
+    document = Document()
+    data = request.get_json()
+    questions = data['questionList']
+    testPath = Path.home() / 'Tests'
+    answerPath = Path.home() / 'AnswerKeys'
+
+    if(not(os.path.isdir(testPath))):
+        os.mkdir(testPath)
+
+    if(not(os.path.isdir(answerPath))):
+        os.mkdir(answerPath)
+
+    testStr = ('Test' + '.doc')
+    answerStr = ('AnswerKey' + '.doc')
+    testFile = open(testPath / testStr, 'w+')
+    answerFile = open(answerPath / answerStr, 'w+')
+    answerFile.write('ANSWER KEY (FORM1)\n')
+    testFile.write('Name:\n\n\nDate:\n\n\nPeriod:\n\n\nState Capitals Quiz (Form1)\n\n\n')
+    random.shuffle(questions)   
+
+    for j in range(50):
+        rand = random.randint(0, 3)
+        answerFile.write(str(j + 1) + '. ' + chr(65 + rand) + '\n')
+        testFile.write(str(j + 1) + '. What is the capital of ' + questions[j]["state"] + '?\n\n') 
+        for k in range(4):
+            if(k == rand):
+                option = questions[j]["capital"]
+            else:
+                rand2 = random.randint(0, 49)
+
+                while(rand2 == j):
+                    rand2 = random.randint(0, 49)
+                
+                option = questions[rand2]["capital"]
+            testFile.write(chr(65 + k) + '. ' + option + '\n\n') 
+        
+        testFile.write('\n\n\n')
+
+    return (
+        send_file(
+        Path.home() / 'Tests' / 'Test1.doc', 
+        mimetype = 'doc', 
+        attachment_filename = 'Test.doc', 
+        as_attachment = True
+        )
+    )
 
 
 if __name__ == '__main__':
