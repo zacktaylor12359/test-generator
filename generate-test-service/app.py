@@ -6,6 +6,8 @@ import zipfile
 import random
 app = Flask(__name__)
 
+document = Document()
+
 
 def change(amount):
     # calculate the resultant change and store the result (res)
@@ -61,6 +63,7 @@ def testroute():
     # if(not(os.path.isdir(answerPath))):
     #     os.mkdir(answerPath)
 
+<<<<<<< HEAD
     # testStr = ('Test' + '.doc')
     # answerStr = ('AnswerKey' + '.doc')
     # testFile = open(testPath / testStr, 'w+')
@@ -86,14 +89,50 @@ def testroute():
     #         testFile.write(chr(65 + k) + '. ' + option + '\n\n') 
         
     #     testFile.write('\n\n\n')
+=======
+    testStr = ('Test' + '.doc')
+    answerStr = ('AnswerKey' + '.doc')
+    testFile = open(testPath / testStr, 'w+')
+    answerFile = open(answerPath / answerStr, 'w+')
+    answerFile.write('ANSWER KEY (FORM1)\n')
+    testFile.write(
+        'Name:\n\n\nDate:\n\n\nPeriod:\n\n\nState Capitals Quiz (Form1)\n\n\n')
+    random.shuffle(questions)
+
+    for j in range(50):
+        rand = random.randint(0, 3)
+        answerFile.write(str(j + 1) + '. ' + chr(65 + rand) + '\n')
+        testFile.write(str(j + 1) + '. What is the capital of ' +
+                       questions[j]["state"] + '?\n\n')
+        for k in range(4):
+            if(k == rand):
+                option = questions[j]["capital"]
+            else:
+                rand2 = random.randint(0, 49)
+
+                while(rand2 == j):
+                    rand2 = random.randint(0, 49)
+
+                option = questions[rand2]["capital"]
+            testFile.write(chr(65 + k) + '. ' + option + '\n\n')
+
+        testFile.write('\n\n\n')
+>>>>>>> e788b8dec4a37872ff35ac101a7c9cc00c8c21cc
 
         document.save(testPath / 'demo.docx')
     return (
         send_file(
+<<<<<<< HEAD
         testPath / 'demo.docx', 
         mimetype = 'doc', 
         attachment_filename = 'Test.doc', 
         as_attachment = True
+=======
+            Path.home() / 'Tests' / 'Test1.doc',
+            mimetype='doc',
+            attachment_filename='Test.doc',
+            as_attachment=True
+>>>>>>> e788b8dec4a37872ff35ac101a7c9cc00c8c21cc
         )
     )
 
