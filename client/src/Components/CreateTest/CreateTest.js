@@ -1,5 +1,5 @@
-import React, { useContext, useCallback, Fragment } from 'react';
-import { useState, none } from '@hookstate/core';
+import React, { useCallback, Fragment } from 'react';
+import { useState } from '@hookstate/core';
 
 import { useTestState } from '../../store/sectionState.ts';
 import styles from './CreateTest.module.css';

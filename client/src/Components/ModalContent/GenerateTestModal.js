@@ -1,13 +1,31 @@
 import styles from './GenerateTestModal.module.css';
 import Modal from '../UI/Modal';
 import Button from '../UI/Button';
+//import { useState, useCallback } from 'React';
 import { useTestState } from '../../store/sectionState.ts';
 
 const GenerateTestModal = (props) => {
+	// const [isLoading, setIsLoading] = useState(false);
+	// const [error, setError] = useState(null);
 	const testState = useTestState();
 
-	const onGenerateTestHandler = () => {
-		console.log(testState.get());
+	const onGenerateTestHandler = async () => {
+		console.log(JSON.stringify(testState.get()));
+		// setIsLoading(true);
+		// setError(null);
+		// try {
+		// 	const response = await fetch('http://localhost:4000', {
+		// 		method: 'POST',
+		// 		body: JSON.stringify(testState.get()),
+		// 		headers: {
+		// 			'Content-Type': 'application/json'
+		// 		}
+		// 	});
+		// } catch {
+		// } finally {
+		// 	props.onClose();
+		// }
+
 		props.onClose();
 	};
 	return (

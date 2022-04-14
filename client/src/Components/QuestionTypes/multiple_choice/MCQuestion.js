@@ -79,7 +79,6 @@ const MCQuestion = (props) => {
 export default MCQuestion;
 
 const Question = (props) => {
-	const [isEditing, setIsEditing] = React.useState(true);
 	const { question, index } = props;
 	let questionState = useState(question);
 	const questionInputRef = useRef();
