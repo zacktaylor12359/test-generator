@@ -103,99 +103,104 @@ const CreateTest = () => {
 				/>
 			)}
 
-			<Card className={styles['test-form']}>
-				<form>
-					{/*-----------Header UI--------------*/}
-					{testState.header.get() ? (
-						<Fragment>
-							<Header />
+			<div className={styles['container']}>
+				<Card className={styles['test-form']}>
+					<form>
+						{/*-----------Header UI--------------*/}
+						{testState.header.get() ? (
+							<Fragment>
+								<Header />
+							</Fragment>
+						) : (
 							<div className={styles['add-rmv-btn']}>
 								<Button
 									type="Button"
-									onClick={() => removeHeader()}
+									onClick={() => addHeader()}
 								>
-									Remove Header
+									Add Header
 								</Button>
 							</div>
-						</Fragment>
-					) : (
-						<div className={styles['add-rmv-btn']}>
-							<Button type="Button" onClick={() => addHeader()}>
-								Add Header
-							</Button>
-						</div>
-					)}
+						)}
 
-					{/*-----------Title UI--------------*/}
+						{/*-----------Title UI--------------*/}
 
-					{testState.title.get() ? (
-						<Fragment>
-							<Title />
+						{testState.title.get() ? (
+							<Fragment>
+								<Title />
+								<div className={styles['add-rmv-btn']}>
+									<Button
+										type="Button"
+										onClick={() => removeTitle()}
+									>
+										Remove Title
+									</Button>
+								</div>
+							</Fragment>
+						) : (
 							<div className={styles['add-rmv-btn']}>
 								<Button
 									type="Button"
-									onClick={() => removeTitle()}
+									onClick={() => addTitle()}
 								>
-									Remove Title
+									Add Title
 								</Button>
 							</div>
-						</Fragment>
-					) : (
-						<div className={styles['add-rmv-btn']}>
-							<Button type="Button" onClick={() => addTitle()}>
-								Add Title
-							</Button>
-						</div>
-					)}
+						)}
 
-					{/*-----------Instructions UI--------------*/}
-					{testState.instructions.get() ? (
-						<Fragment>
-							<Instructions />
+						{/*-----------Instructions UI--------------*/}
+						{testState.instructions.get() ? (
+							<Fragment>
+								<Instructions />
+								<div className={styles['add-rmv-btn']}>
+									<Button
+										type="Button"
+										onClick={() => removeInstructions()}
+									>
+										Remove Instructions
+									</Button>
+								</div>
+							</Fragment>
+						) : (
 							<div className={styles['add-rmv-btn']}>
 								<Button
 									type="Button"
-									onClick={() => removeInstructions()}
+									onClick={() => addInstructions()}
 								>
-									Remove Instructions
+									Add Instructions
 								</Button>
 							</div>
-						</Fragment>
-					) : (
+						)}
+
+						{/*-----------New Section UI--------------*/}
+						<SectionList
+							testContent={testState.section}
+							showRemoveSectionModal={showRemoveSectionModal}
+						/>
 						<div className={styles['add-rmv-btn']}>
 							<Button
 								type="Button"
-								onClick={() => addInstructions()}
+								onClick={() =>
+									showAddSectionModal(
+										testState.section.length
+									)
+								}
 							>
-								Add Instructions
+								Add New Section
 							</Button>
 						</div>
-					)}
 
-					{/*-----------New Section UI--------------*/}
-					<SectionList
-						testContent={testState.section}
-						showRemoveSectionModal={showRemoveSectionModal}
-					/>
-					<div className={styles['add-rmv-btn']}>
-						<Button
-							type="Button"
-							onClick={() =>
-								showAddSectionModal(testState.section.length)
-							}
-						>
-							Add New Section
-						</Button>
-					</div>
-
-					{/*-----------Submit Test--------------*/}
-					<div className={styles['add-rmv-btn']}>
-						<Button type="Button" onClick={showGenerateTestModal}>
-							Generate Test
-						</Button>
-					</div>
-				</form>
-			</Card>
+						{/*-----------Submit Test--------------*/}
+						<div className={styles['add-rmv-btn']}>
+							<Button
+								type="Button"
+								onClick={showGenerateTestModal}
+							>
+								Generate Test
+							</Button>
+						</div>
+					</form>
+				</Card>
+			</div>
 		</Fragment>
 	);
 };

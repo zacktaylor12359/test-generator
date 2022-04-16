@@ -6,6 +6,7 @@ import reactTextareaAutosize from 'react-textarea-autosize';
 import styles from './MCQuestion.module.css';
 import Button from '../../UI/Button';
 import AnswerChoices from './AnswerChoices';
+import TextareaAutosize from 'react-textarea-autosize';
 
 /*
 MC structure
@@ -67,8 +68,8 @@ const MCQuestion = (props) => {
 					<Question question={element} index={index} />
 				</div>
 			))}
-			<div className='Button-section'>
-				<Button type='Button' onClick={addQuestion}>
+			<div className="Button-section">
+				<Button type="Button" onClick={addQuestion}>
 					AddQuestion
 				</Button>
 			</div>
@@ -82,7 +83,6 @@ const Question = (props) => {
 	const { question, index } = props;
 	let questionState = useState(question);
 	const questionInputRef = useRef();
-
 	const removeQuestion = () => {
 		questionState.set(none);
 	};
@@ -92,13 +92,29 @@ const Question = (props) => {
 
 	return (
 		<Fragment>
-			<label>Question {index + 1}</label>
-			<input ref={questionInputRef} onBlur={onBlurHandler} type='text' />
+			<div className={styles['control']}>
+				<label className={styles['label']} htmlFor="question-field">
+					{index + 1}.
+				</label>
+				<TextareaAutosize
+					id="question-field"
+					className={styles['question-field']}
+					autoFocus
+					ref={questionInputRef}
+					onBlur={onBlurHandler}
+					type="text"
+				/>
+			</div>
 
-			<AnswerChoices answerOptions={props.question.answer_options} />
+			<div className={styles['answer-container']}>
+				<AnswerChoices
+					answerOptions={question.answer_options}
+					questionID={question.id.value}
+				/>
+			</div>
 			<Button
 				className={styles['rmv-btn']}
-				type='Button'
+				type="Button"
 				onClick={() => removeQuestion(props.index)}
 			>
 				Remove Question

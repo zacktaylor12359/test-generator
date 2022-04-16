@@ -1,0 +1,24 @@
+.control {
+	width: 100%;
+	display: flex;
+	justify-content: stretch;
+	align-items: end;
+}
+
+.answers-container {
+	margin-top: 0.15in;
+	margin-left: 0.2in;
+}
+
+.answer-field {
+	width: 100%;
+	font: inherit;
+	font-size: 12pt;
+	resize: none;
+	margin-bottom: 0.1in;
+}
+
+.radio-buttion {
+	margin: 0;
+	padding: 0;
+}

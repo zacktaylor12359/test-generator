@@ -1,26 +1,28 @@
 import { State, useState, none } from '@hookstate/core';
 import React, { useRef, Fragment } from 'react';
+import TextareaAutosize from 'react-textarea-autosize';
+import styles from './AnswerChoices.module.css';
 
 const AnswerChoices = (props) => {
-	const { answerOptions } = props;
+	const { answerOptions, questionID } = props;
 	let answerOptionsState = useState(answerOptions);
 
 	return (
-		<Fragment>
+		<div className={styles['answers-container']}>
 			{answerOptionsState.map((element, index) => (
 				<div key={element.id.value}>
 					{console.log('answerChoice Rendered')}
-					<Answer answer={element} index={index} />
+					<Answer answer={element} questionID={questionID} />
 				</div>
 			))}
-		</Fragment>
+		</div>
 	);
 };
 
 export default AnswerChoices;
 
 const Answer = (props) => {
-	const { answer, index } = props;
+	const { answer, questionID } = props;
 	let answerState = useState(answer);
 	const answerInputRef = useRef();
 
@@ -29,26 +31,22 @@ const Answer = (props) => {
 	};
 
 	return (
-		<Fragment>
-			{index === 0 ? (
-				<Fragment>
-					<label>Answer</label>
-					<input
-						ref={answerInputRef}
-						onBlur={onBlurHandler}
-						type='text'
-					/>
-				</Fragment>
-			) : (
-				<Fragment>
-					<label>Option {props.index + 1}</label>
-					<input
-						ref={answerInputRef}
-						onBlur={onBlurHandler}
-						type='text'
-					/>
-				</Fragment>
-			)}
-		</Fragment>
+		<div className={styles['control']}>
+			<label className={styles['label']} htmlFor="answer-field">
+				<input
+					type="radio"
+					name={questionID}
+					className={styles['radio-button']}
+				></input>
+			</label>
+			<TextareaAutosize
+				id="answer-field"
+				className={styles['answer-field']}
+				autoFocus
+				ref={answerInputRef}
+				onBlur={onBlurHandler}
+				type="text"
+			/>
+		</div>
 	);
 };

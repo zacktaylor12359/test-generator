@@ -1,9 +1,21 @@
 .button {
-	font: inherit;
+	font-family: sans-serif;
+	font-size: 12pt;
 	padding: 0.25rem 1rem;
 	cursor: pointer;
+	border: none;
+	background: none;
+	font-weight: 900;
+	color: rgb(41, 91, 209);
 }
 
+.button:hover {
+	color: rgb(152, 180, 245);
+}
+
+.button:active {
+	color: rgb(117, 140, 196);
+}
 .button:focus {
 	outline: none;
 }

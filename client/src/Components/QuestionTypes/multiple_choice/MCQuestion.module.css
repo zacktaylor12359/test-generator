@@ -1,6 +1,19 @@
+.label {
+	font: inherit;
+	font-size: 17pt;
+}
+.control {
+	width: 100%;
+	display: flex;
+	justify-content: stretch;
+	align-items: start;
+}
+
 .question-field {
-	width: 70%;
-	height: 2rem;
+	font: inherit;
+	font-size: 12pt;
+	width: 100%;
+	resize: none;
 }
 
 .rmv-btn {
