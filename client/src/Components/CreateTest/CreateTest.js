@@ -85,32 +85,33 @@ const CreateTest = () => {
 			{addSectionModal && (
 				<AddSectionModal
 					index={editSectionIndex}
-					title='Add New Section'
+					title="Add New Section"
 					onClose={hideAddSectionModal}
 				/>
 			)}
 			{removeSectionModal && (
 				<RemoveSectionModal
 					index={editSectionIndex}
-					title='Remove Section'
+					title="Remove Section"
 					onClose={hideRemoveSectionModal}
 				/>
 			)}
 			{generateTestModal && (
 				<GenerateTestModal
-					title='Generate Test'
+					title="Generate Test"
 					onClose={hideGenerateTestModal}
 				/>
 			)}
-			<form>
-				<Card className={styles['test-form']}>
+
+			<Card className={styles['test-form']}>
+				<form>
 					{/*-----------Header UI--------------*/}
 					{testState.header.get() ? (
 						<Fragment>
 							<Header />
 							<div className={styles['add-rmv-btn']}>
 								<Button
-									type='Button'
+									type="Button"
 									onClick={() => removeHeader()}
 								>
 									Remove Header
@@ -119,7 +120,7 @@ const CreateTest = () => {
 						</Fragment>
 					) : (
 						<div className={styles['add-rmv-btn']}>
-							<Button type='Button' onClick={() => addHeader()}>
+							<Button type="Button" onClick={() => addHeader()}>
 								Add Header
 							</Button>
 						</div>
@@ -132,7 +133,7 @@ const CreateTest = () => {
 							<Title />
 							<div className={styles['add-rmv-btn']}>
 								<Button
-									type='Button'
+									type="Button"
 									onClick={() => removeTitle()}
 								>
 									Remove Title
@@ -141,7 +142,7 @@ const CreateTest = () => {
 						</Fragment>
 					) : (
 						<div className={styles['add-rmv-btn']}>
-							<Button type='Button' onClick={() => addTitle()}>
+							<Button type="Button" onClick={() => addTitle()}>
 								Add Title
 							</Button>
 						</div>
@@ -153,7 +154,7 @@ const CreateTest = () => {
 							<Instructions />
 							<div className={styles['add-rmv-btn']}>
 								<Button
-									type='Button'
+									type="Button"
 									onClick={() => removeInstructions()}
 								>
 									Remove Instructions
@@ -163,7 +164,7 @@ const CreateTest = () => {
 					) : (
 						<div className={styles['add-rmv-btn']}>
 							<Button
-								type='Button'
+								type="Button"
 								onClick={() => addInstructions()}
 							>
 								Add Instructions
@@ -178,7 +179,7 @@ const CreateTest = () => {
 					/>
 					<div className={styles['add-rmv-btn']}>
 						<Button
-							type='Button'
+							type="Button"
 							onClick={() =>
 								showAddSectionModal(testState.section.length)
 							}
@@ -189,12 +190,12 @@ const CreateTest = () => {
 
 					{/*-----------Submit Test--------------*/}
 					<div className={styles['add-rmv-btn']}>
-						<Button type='Button' onClick={showGenerateTestModal}>
+						<Button type="Button" onClick={showGenerateTestModal}>
 							Generate Test
 						</Button>
 					</div>
-				</Card>
-			</form>
+				</form>
+			</Card>
 		</Fragment>
 	);
 };
@@ -209,7 +210,7 @@ const SectionList = React.memo((props) => {
 				<MCQuestion question_structure={element.question_structure} />
 			)}
 			<Button
-				type='Button'
+				type="Button"
 				onClick={() => props.showRemoveSectionModal(index)}
 			>
 				Remove Section

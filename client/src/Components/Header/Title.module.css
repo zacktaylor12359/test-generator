@@ -1,17 +1,17 @@
 .control {
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
 	display: flex;
 	flex-direction: column;
 }
 
-input {
-	border: 1px solid #ccc;
-	width: 80%;
-	height: 3rem;
-	font: inherit;
-	text-align: center;
-	font-size: large;
+.title {
+	font-family: inherit;
+	font-size: 20pt;
 	font-weight: bold;
 	margin-bottom: 0.5rem;
-	margin-top: 0.5rem;
+	width: 70%;
+	height: 3rem;
 	align-self: center;
+	text-align: center;
 }

@@ -5,12 +5,14 @@
 }
 
 html {
-	font-family: TimesNewRoman, 'Times New Roman', Times, Baskerville, Georgia;
+	min-height: 100%;
+	font-family: 'Helvatica', TimesNewRoman, 'Times New Roman', Times,
+		Baskerville, Georgia;
 }
 
 body {
 	margin: 0;
-	background-color: #eceabb;
+	background: linear-gradient(180deg, #8cacd8 0%, #577eb1 90%, #638fca 100%);
 }
 
 code {

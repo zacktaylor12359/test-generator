@@ -11,8 +11,9 @@ const Title = () => {
 	return (
 		<div className={styles['control']}>
 			<input
-				type='text'
-				placeholder='Title'
+				type="text"
+				className={styles['title']}
+				placeholder="Title"
 				value={testState.entered_title.value}
 				onChange={titleChangeHandler}
 			/>
