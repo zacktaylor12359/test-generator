@@ -37,7 +37,7 @@ const Answer = (props) => {
 					type="radio"
 					name={questionID}
 					className={styles['radio-button']}
-				></input>
+				/>
 			</label>
 			<TextareaAutosize
 				id="answer-field"

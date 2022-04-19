@@ -1,8 +1,7 @@
 .control {
 	width: 100%;
 	display: flex;
-	justify-content: stretch;
-	align-items: end;
+	align-items: start;
 }
 
 .answers-container {
@@ -15,10 +14,11 @@
 	font: inherit;
 	font-size: 12pt;
 	resize: none;
-	margin-bottom: 0.1in;
+	margin-bottom: 0.5em;
 }
 
-.radio-buttion {
+.radio-button {
 	margin: 0;
 	padding: 0;
+	height: 1.25em;
 }
