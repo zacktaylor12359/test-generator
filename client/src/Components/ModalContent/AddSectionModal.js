@@ -76,6 +76,7 @@ const SectionModal = (props) => {
 			for (let i = 1; i <= numQuestions; i++) {
 				questionsArr.push({
 					id: i,
+					correct_answer_id: 1,
 					answer_options: answersArr,
 				});
 			}
@@ -103,51 +104,51 @@ const SectionModal = (props) => {
 			</header>
 			<form className={styles.content}>
 				<div className={styles['form-input']}>
-					<label htmlFor="title">Section Title:</label>
+					<label htmlFor='title'>Section Title:</label>
 
 					<input
 						onChange={sectionTitleChangeHandler}
-						type="checkbox"
-						id="title"
-						name="title"
+						type='checkbox'
+						id='title'
+						name='title'
 						value={sectionTitle}
 					/>
 				</div>
 
 				<div className={styles['form-input']}>
-					<label htmlFor="instructions">Section Instructions:</label>
+					<label htmlFor='instructions'>Section Instructions:</label>
 					<input
 						onChange={sectionInstructionsChangeHandler}
-						type="checkbox"
-						id="instructions"
-						name="instructions"
+						type='checkbox'
+						id='instructions'
+						name='instructions'
 						value={sectionInstructions}
 					/>
 				</div>
 
 				<div className={styles['form-input']}>
-					<label htmlFor="question-type">Queston Type:</label>
+					<label htmlFor='question-type'>Queston Type:</label>
 					<select onChange={typeChangeHandler}>
-						<option value="1">Multiple Choice</option>
-						<option value="1">Multiple Choice</option>
+						<option value='1'>Multiple Choice</option>
+						<option value='1'>Multiple Choice</option>
 					</select>
 				</div>
 
 				{typeSettings === 'MC' && (
 					<Fragment>
 						<div className={styles['form-input']}>
-							<label htmlFor="answer-options">
+							<label htmlFor='answer-options'>
 								Number of Questions:
 							</label>
 							<input
 								className={styles['number-input']}
 								onChange={numQuestionsChangeHandler}
-								type="number"
-								id="answer-options"
-								name="answer-options"
-								min="0"
-								max="500"
-								step="1"
+								type='number'
+								id='answer-options'
+								name='answer-options'
+								min='0'
+								max='500'
+								step='1'
 								value={
 									numQuestions > 0
 										? numQuestions.toString()
@@ -157,18 +158,18 @@ const SectionModal = (props) => {
 						</div>
 
 						<div className={styles['form-input']}>
-							<label htmlFor="answer-options">
+							<label htmlFor='answer-options'>
 								Number of Answer Options:
 							</label>
 							<input
 								className={styles['number-input']}
 								onChange={numOptionsChangeHandler}
-								type="number"
-								id="answer-options"
-								name="answer-options"
-								min="1"
-								max="10"
-								step="1"
+								type='number'
+								id='answer-options'
+								name='answer-options'
+								min='1'
+								max='10'
+								step='1'
 								value={
 									numOptions > 0 ? numOptions.toString() : ''
 								}
