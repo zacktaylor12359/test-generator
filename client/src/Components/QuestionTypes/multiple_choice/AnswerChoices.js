@@ -28,10 +28,8 @@ const Answer = (props) => {
 
 	const onAnswerChangeHandler = (e) => {
 		console.log(e.target.value);
-	};
-
-	const onBlurHandler = () => {
-		answerState.entered_option.set(answerInputRef.current.value);
+		answerState.correct_answer_id.set(e.target.value);
+		console.log('updated state? ' + answerState.correct_answer_id.get());
 	};
 
 	return (
@@ -42,9 +40,6 @@ const Answer = (props) => {
 					name={questionID}
 					className={styles['radio-button']}
 					onChange={onAnswerChangeHandler}
-					onBlur={() => {
-						console.log('cunt');
-					}}
 					value={answerState.id.get()}
 				/>
 			</label>
@@ -53,7 +48,6 @@ const Answer = (props) => {
 				className={styles['answer-field']}
 				autoFocus
 				ref={answerInputRef}
-				onBlur={onBlurHandler}
 				type='text'
 			/>
 		</div>
