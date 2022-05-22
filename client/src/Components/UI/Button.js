@@ -14,4 +14,17 @@ const Button = (props) => {
 	);
 };
 
+export const SubmitButton = (props) => {
+	const classes = styles['submit-button'] + ' ' + props.className;
+	return (
+		<button
+			className={classes}
+			type={props.type || 'button'}
+			onClick={props.onClick}
+		>
+			{props.children}
+		</button>
+	);
+};
+
 export default Button;

@@ -7,7 +7,7 @@ import Card from '../UI/Card';
 import Header from '../Header/Header';
 import Title from '../Header/Title';
 import Instructions from '../Header/Instructions';
-import Button from '../UI/Button';
+import Button, { SubmitButton } from '../UI/Button';
 import MCQuestion from '../QuestionTypes/multiple_choice/MCQuestion';
 import AddSectionModal from '../ModalContent/AddSectionModal';
 import RemoveSectionModal from '../ModalContent/RemoveSectionModal';
@@ -110,6 +110,14 @@ const CreateTest = () => {
 						{testState.header.get() ? (
 							<Fragment>
 								<Header />
+								<div className={styles['add-rmv-btn']}>
+									<Button
+										type="Button"
+										onClick={() => removeHeader()}
+									>
+										Remove Header
+									</Button>
+								</div>
 							</Fragment>
 						) : (
 							<div className={styles['add-rmv-btn']}>
@@ -190,13 +198,13 @@ const CreateTest = () => {
 						</div>
 
 						{/*-----------Submit Test--------------*/}
-						<div className={styles['add-rmv-btn']}>
-							<Button
+						<div className={styles['generate-test-btn']}>
+							<SubmitButton
 								type="Button"
 								onClick={showGenerateTestModal}
 							>
 								Generate Test
-							</Button>
+							</SubmitButton>
 						</div>
 					</form>
 				</Card>

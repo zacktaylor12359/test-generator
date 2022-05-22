@@ -20,3 +20,11 @@
 	margin-top: 2rem;
 	margin-bottom: 2rem;
 }
+
+.generate-test-btn {
+	display: flex;
+	flex-direction: row;
+	justify-content: right;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}

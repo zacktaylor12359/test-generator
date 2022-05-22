@@ -13,7 +13,7 @@ const Title = () => {
 	return (
 		<div className={styles['control']}>
 			<TextareaAutosize
-				id="header"
+				id="instructions"
 				className={styles['instructions']}
 				autoFocus
 				minRows={1}
