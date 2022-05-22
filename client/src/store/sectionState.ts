@@ -43,6 +43,7 @@ interface MCSection {
 			{
 				id: number;
 				entered_question: string;
+				correct_answer_id: number;
 				answer_options: [
 					{
 						id: number;

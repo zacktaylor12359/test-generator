@@ -1,5 +1,4 @@
 .container {
-	overflow-x: scroll;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;

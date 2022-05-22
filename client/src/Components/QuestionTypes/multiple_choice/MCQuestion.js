@@ -68,8 +68,8 @@ const MCQuestion = (props) => {
 					<Question question={element} index={index} />
 				</div>
 			))}
-			<div className="Button-section">
-				<Button type="Button" onClick={addQuestion}>
+			<div className='Button-section'>
+				<Button type='Button' onClick={addQuestion}>
 					AddQuestion
 				</Button>
 			</div>
@@ -86,23 +86,19 @@ const Question = (props) => {
 	const removeQuestion = () => {
 		questionState.set(none);
 	};
-	const onBlurHandler = () => {
-		questionState.entered_question.set(questionInputRef.current.value);
-	};
 
 	return (
 		<Fragment>
 			<div className={styles['control']}>
-				<label className={styles['label']} htmlFor="question-field">
+				<label className={styles['label']} htmlFor='question-field'>
 					{index + 1}.
 				</label>
 				<TextareaAutosize
-					id="question-field"
+					id='question-field'
 					className={styles['question-field']}
 					autoFocus
 					ref={questionInputRef}
-					onBlur={onBlurHandler}
-					type="text"
+					type='text'
 				/>
 			</div>
 
@@ -114,7 +110,7 @@ const Question = (props) => {
 			</div>
 			<Button
 				className={styles['rmv-btn']}
-				type="Button"
+				type='Button'
 				onClick={() => removeQuestion(props.index)}
 			>
 				Remove Question
