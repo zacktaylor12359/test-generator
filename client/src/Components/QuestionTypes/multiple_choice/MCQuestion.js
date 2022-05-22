@@ -68,8 +68,8 @@ const MCQuestion = (props) => {
 					<Question question={element} index={index} />
 				</div>
 			))}
-			<div className='Button-section'>
-				<Button type='Button' onClick={addQuestion}>
+			<div className="Button-section">
+				<Button type="Button" onClick={addQuestion}>
 					AddQuestion
 				</Button>
 			</div>
@@ -87,18 +87,22 @@ const Question = (props) => {
 		questionState.set(none);
 	};
 
+	const onChangeAnswerHandler = (id) => {
+		questionState.correct_answer_id.set(id);
+	};
+
 	return (
 		<Fragment>
 			<div className={styles['control']}>
-				<label className={styles['label']} htmlFor='question-field'>
+				<label className={styles['label']} htmlFor="question-field">
 					{index + 1}.
 				</label>
 				<TextareaAutosize
-					id='question-field'
+					id="question-field"
 					className={styles['question-field']}
 					autoFocus
 					ref={questionInputRef}
-					type='text'
+					type="text"
 				/>
 			</div>
 
@@ -106,11 +110,12 @@ const Question = (props) => {
 				<AnswerChoices
 					answerOptions={question.answer_options}
 					questionID={question.id.value}
+					onChange={onChangeAnswerHandler}
 				/>
 			</div>
 			<Button
 				className={styles['rmv-btn']}
-				type='Button'
+				type="Button"
 				onClick={() => removeQuestion(props.index)}
 			>
 				Remove Question

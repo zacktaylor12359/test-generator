@@ -4,15 +4,23 @@ import TextareaAutosize from 'react-textarea-autosize';
 import styles from './AnswerChoices.module.css';
 
 const AnswerChoices = (props) => {
-	const { answerOptions, questionID } = props;
+	const { answerOptions, questionID, onChange } = props;
 	let answerOptionsState = useState(answerOptions);
+
+	const onChangeAnswer = (id) => {
+		onChange(id);
+	};
 
 	return (
 		<div className={styles['answers-container']}>
 			{answerOptionsState.map((element, index) => (
 				<div key={element.id.value}>
 					{console.log('answerChoice Rendered')}
-					<Answer answer={element} questionID={questionID} />
+					<Answer
+						answer={element}
+						questionID={questionID}
+						onChangeAnswer={onChangeAnswer}
+					/>
 				</div>
 			))}
 		</div>
@@ -22,33 +30,32 @@ const AnswerChoices = (props) => {
 export default AnswerChoices;
 
 const Answer = (props) => {
-	const { answer, questionID } = props;
+	const { answer, questionID, onChangeAnswer } = props;
+	console.log(props.questionID);
 	let answerState = useState(answer);
 	const answerInputRef = useRef();
 
-	const onAnswerChangeHandler = (e) => {
-		console.log(e.target.value);
-		answerState.correct_answer_id.set(e.target.value);
-		console.log('updated state? ' + answerState.correct_answer_id.get());
+	const answerChangeHandler = (e) => {
+		onChangeAnswer(e.target.value);
 	};
 
 	return (
 		<div className={styles['control']}>
-			<label className={styles['label']} htmlFor='answer-field'>
+			<label className={styles['label']} htmlFor="answer-field">
 				<input
-					type='radio'
+					type="radio"
 					name={questionID}
 					className={styles['radio-button']}
-					onChange={onAnswerChangeHandler}
+					onChange={answerChangeHandler}
 					value={answerState.id.get()}
 				/>
 			</label>
 			<TextareaAutosize
-				id='answer-field'
+				id="answer-field"
 				className={styles['answer-field']}
 				autoFocus
 				ref={answerInputRef}
-				type='text'
+				type="text"
 			/>
 		</div>
 	);
