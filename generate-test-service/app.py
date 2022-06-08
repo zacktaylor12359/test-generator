@@ -11,7 +11,6 @@ app = Flask(__name__)
 
 def change(amount):
     # calculate the resultant change and store the result (res)
-    # heroku test 2
     res = []
     coins = [1, 5, 10, 25]  # value of pennies, nickels, dimes, quarters
     coin_lookup = {25: "quarters", 10: "dimes", 5: "nickels", 1: "pennies"}
@@ -58,14 +57,15 @@ def testroute():
     section = test['section']
 
     # document object
-    doc = Document()
+    question_doc = Document()
+    answer_doc = Document()
 
     # generate header
     if has_header == True:
         header_left_alignment = test['header_left_alignment']
         header_text = test['entered_header']
 
-        doc_settings = doc.sections[0]
+        doc_settings = question_doc.sections[0]
         doc_settings.different_first_page_header_footer = True
         header = doc_settings.first_page_header
         header_para = header.paragraphs[0]
@@ -82,7 +82,7 @@ def testroute():
     if has_title == True:
         title_text = test['entered_title']
 
-        title_para = doc.add_paragraph()
+        title_para = question_doc.add_paragraph()
         title_para.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
         title_para.paragraph_format.space_before = Pt(12)
         title_para.paragraph_format.space_after = Pt(12)
@@ -98,7 +98,7 @@ def testroute():
     if has_instructions == True:
         instructions_text = test['entered_instructions']
 
-        instructions_para = doc.add_paragraph()
+        instructions_para = question_doc.add_paragraph()
         instructions_para.paragraph_format.space_after = Pt(40)
         instructions_run = instructions_para.add_run()
         instructions_font = instructions_run.font
@@ -117,7 +117,7 @@ def testroute():
         question_structure = section[i]['question_structure']
 
         if has_section_title:
-            section_title_para = doc.add_paragraph()
+            section_title_para = question_doc.add_paragraph()
             section_title_para.paragraph_format.space_before = Pt(20)
             section_title_para.paragraph_format.space_after = Pt(0)
             section_title_run = section_title_para.add_run()
@@ -130,7 +130,7 @@ def testroute():
 
         # generate section instructions
         if has_section_instructions:
-            section_instructions_para = doc.add_paragraph()
+            section_instructions_para = question_doc.add_paragraph()
             section_instructions_para.paragraph_format.space_before = Pt(0)
             section_instructions_para.paragraph_format.space_after = Pt(0)
             section_instructions_run = section_instructions_para.add_run()
@@ -146,7 +146,8 @@ def testroute():
             for j in range(len(questions)):
                 question_text = questions[j]['entered_question']
 
-                question_para = doc.add_paragraph()
+                question_para = question_doc.add_paragraph()
+
                 question_para.paragraph_format.space_before = Pt(12)
                 question_para.paragraph_format.space_after = Pt(12)
                 question_run = question_para.add_run()
@@ -155,6 +156,10 @@ def testroute():
                 question_font.size = Pt(12)
 
                 question_run.text = f"{j + 1}. {question_text}\n"
+
+                answer_para = answer_doc.add_paragraph()
+                answer_run = answer_para.add_run()
+                answer_font = answer_run.font
 
                 answer_options = questions[j]['answer_options']
                 for k in range(len(answer_options)):
@@ -172,7 +177,7 @@ def testroute():
         os.mkdir(answerPath)
 
     os.chdir(testPath)
-    doc.save('demo.docx')
+    question_doc.save('demo.docx')
 
     os.chdir(Path.home())
     return (
