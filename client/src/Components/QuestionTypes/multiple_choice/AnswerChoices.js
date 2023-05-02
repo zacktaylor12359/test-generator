@@ -35,15 +35,19 @@ const Answer = (props) => {
 	let answerState = useState(answer);
 	const answerInputRef = useRef();
 
+	const answerBlurHandler = () => {
+		answerState.entered_option.set(answerInputRef.current.value);
+	};
+
 	const answerChangeHandler = (e) => {
 		onChangeAnswer(e.target.value);
 	};
 
 	return (
 		<div className={styles['control']}>
-			<label className={styles['label']} htmlFor="answer-field">
+			<label className={styles['label']} htmlFor='answer-field'>
 				<input
-					type="radio"
+					type='radio'
 					name={questionID}
 					className={styles['radio-button']}
 					onChange={answerChangeHandler}
@@ -51,11 +55,12 @@ const Answer = (props) => {
 				/>
 			</label>
 			<TextareaAutosize
-				id="answer-field"
+				id='answer-field'
 				className={styles['answer-field']}
 				autoFocus
 				ref={answerInputRef}
-				type="text"
+				onBlur={answerBlurHandler}
+				type='text'
 			/>
 		</div>
 	);

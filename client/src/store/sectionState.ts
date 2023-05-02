@@ -34,8 +34,10 @@ interface TestState {
 
 interface MCSection {
 	id: number;
-	section_title: string;
-	section_instructions: string;
+	section_title: boolean;
+	entered_section_title: string;
+	section_instructions: boolean;
+	entered_section_instructions: string;
 	question_type: string;
 	question_structure: {
 		num_options: number;

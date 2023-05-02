@@ -53,7 +53,8 @@ const MCQuestion = (props) => {
 		}
 		const newQuestion = {
 			id: new_id,
-			question: '',
+			entered_question: '',
+			conrrect_answer_id: 1,
 			answer_options: answersArr,
 		};
 
@@ -68,8 +69,8 @@ const MCQuestion = (props) => {
 					<Question question={element} index={index} />
 				</div>
 			))}
-			<div className="Button-section">
-				<Button type="Button" onClick={addQuestion}>
+			<div className='Button-section'>
+				<Button type='Button' onClick={addQuestion}>
 					AddQuestion
 				</Button>
 			</div>
@@ -83,6 +84,11 @@ const Question = (props) => {
 	const { question, index } = props;
 	let questionState = useState(question);
 	const questionInputRef = useRef();
+
+	const questionBlurHandler = () => {
+		questionState.entered_question.set(questionInputRef.current.value);
+	};
+
 	const removeQuestion = () => {
 		questionState.set(none);
 	};
@@ -94,15 +100,16 @@ const Question = (props) => {
 	return (
 		<Fragment>
 			<div className={styles['control']}>
-				<label className={styles['label']} htmlFor="question-field">
+				<label className={styles['label']} htmlFor='question-field'>
 					{index + 1}.
 				</label>
 				<TextareaAutosize
-					id="question-field"
+					id='question-field'
 					className={styles['question-field']}
 					autoFocus
 					ref={questionInputRef}
-					type="text"
+					onBlur={questionBlurHandler}
+					type='text'
 				/>
 			</div>
 
@@ -115,7 +122,7 @@ const Question = (props) => {
 			</div>
 			<Button
 				className={styles['rmv-btn']}
-				type="Button"
+				type='Button'
 				onClick={() => removeQuestion(props.index)}
 			>
 				Remove Question
