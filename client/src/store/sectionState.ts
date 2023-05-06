@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, createState } from '@hookstate/core';
+import { useHookstate, hookstate } from '@hookstate/core';
 /*
 MC structure
 section [
@@ -57,7 +57,7 @@ interface MCSection {
 	};
 }
 
-const state = createState<TestState>({
+const state = hookstate<TestState>({
 	header: false,
 	header_left_alignment: true,
 	entered_header: '',
@@ -69,7 +69,7 @@ const state = createState<TestState>({
 });
 
 export const useTestState = () => {
-	return useState(state);
+	return useHookstate(state);
 };
 
 export const addMCSection = (section: MCSection, index: number) => {

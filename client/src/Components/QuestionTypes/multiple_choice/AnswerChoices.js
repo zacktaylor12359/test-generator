@@ -1,13 +1,14 @@
-import { State, useState, none } from '@hookstate/core';
+import { State, useHookstate, none } from '@hookstate/core';
 import React, { useRef, Fragment } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import styles from './AnswerChoices.module.css';
 
 const AnswerChoices = (props) => {
 	const { answerOptions, questionID, onChange } = props;
-	let answerOptionsState = useState(answerOptions);
+	let answerOptionsState = useHookstate(answerOptions);
 
 	const onChangeAnswer = (id) => {
+		console.log('cunt', id);
 		onChange(id);
 	};
 
@@ -15,7 +16,6 @@ const AnswerChoices = (props) => {
 		<div className={styles['answers-container']}>
 			{answerOptionsState.map((element, index) => (
 				<div key={element.id.value}>
-					{console.log('answerChoice Rendered')}
 					<Answer
 						answer={element}
 						questionID={questionID}
@@ -31,8 +31,7 @@ export default AnswerChoices;
 
 const Answer = (props) => {
 	const { answer, questionID, onChangeAnswer } = props;
-	console.log(props.questionID);
-	let answerState = useState(answer);
+	let answerState = useHookstate(answer);
 	const answerInputRef = useRef();
 
 	const answerBlurHandler = () => {
@@ -40,7 +39,8 @@ const Answer = (props) => {
 	};
 
 	const answerChangeHandler = (e) => {
-		onChangeAnswer(e.target.value);
+		let id = parseInt(e.target.value);
+		onChangeAnswer(id);
 	};
 
 	return (
@@ -62,6 +62,7 @@ const Answer = (props) => {
 				onBlur={answerBlurHandler}
 				type='text'
 			/>
+			Last render at: {new Date().toISOString()}
 		</div>
 	);
 };

@@ -1,5 +1,11 @@
-import React, { useCallback, Fragment } from 'react';
-import { useState } from '@hookstate/core';
+import React, {
+	useState,
+	useCallback,
+	Fragment,
+	useRef,
+	useEffect,
+} from 'react';
+import { useHookstate } from '@hookstate/core';
 
 import { useTestState } from '../../store/sectionState.ts';
 import styles from './CreateTest.module.css';
@@ -12,16 +18,22 @@ import MCQuestion from '../QuestionTypes/multiple_choice/MCQuestion';
 import AddSectionModal from '../ModalContent/AddSectionModal';
 import RemoveSectionModal from '../ModalContent/RemoveSectionModal';
 import GenerateTestModal from '../ModalContent/GenerateTestModal';
+import { ViewportList } from 'react-viewport-list';
 
 const CreateTest = () => {
 	const testState = useTestState();
 
 	//Section states
 	//const [section, setSection] = useState([]);
-	const [addSectionModal, setAddSectionModal] = React.useState(false);
-	const [removeSectionModal, setRemoveSectionModal] = React.useState(false);
-	const [editSectionIndex, setEditSectionIndex] = React.useState(-1);
-	const [generateTestModal, setGenerateTestModal] = React.useState(false);
+	const [addSectionModal, setAddSectionModal] = useState(false);
+	const [removeSectionModal, setRemoveSectionModal] = useState(false);
+	const [editSectionIndex, setEditSectionIndex] = useState(-1);
+	const [generateTestModal, setGenerateTestModal] = useState(false);
+
+	useEffect(() => {
+		console.log('cunt');
+		window.scrollTo(0, 0);
+	}, []);
 
 	//Header functions
 	const removeHeader = () => {
@@ -82,23 +94,24 @@ const CreateTest = () => {
 	// };
 	return (
 		<Fragment>
+			<JsonDump state={testState} />
 			{addSectionModal && (
 				<AddSectionModal
 					index={editSectionIndex}
-					title="Add New Section"
+					title='Add New Section'
 					onClose={hideAddSectionModal}
 				/>
 			)}
 			{removeSectionModal && (
 				<RemoveSectionModal
 					index={editSectionIndex}
-					title="Remove Section"
+					title='Remove Section'
 					onClose={hideRemoveSectionModal}
 				/>
 			)}
 			{generateTestModal && (
 				<GenerateTestModal
-					title="Generate Test"
+					title='Generate Test'
 					onClose={hideGenerateTestModal}
 				/>
 			)}
@@ -112,7 +125,7 @@ const CreateTest = () => {
 								<Header />
 								<div className={styles['add-rmv-btn']}>
 									<Button
-										type="Button"
+										type='Button'
 										onClick={() => removeHeader()}
 									>
 										Remove Header
@@ -122,7 +135,7 @@ const CreateTest = () => {
 						) : (
 							<div className={styles['add-rmv-btn']}>
 								<Button
-									type="Button"
+									type='Button'
 									onClick={() => addHeader()}
 								>
 									Add Header
@@ -137,7 +150,7 @@ const CreateTest = () => {
 								<Title />
 								<div className={styles['add-rmv-btn']}>
 									<Button
-										type="Button"
+										type='Button'
 										onClick={() => removeTitle()}
 									>
 										Remove Title
@@ -147,7 +160,7 @@ const CreateTest = () => {
 						) : (
 							<div className={styles['add-rmv-btn']}>
 								<Button
-									type="Button"
+									type='Button'
 									onClick={() => addTitle()}
 								>
 									Add Title
@@ -161,7 +174,7 @@ const CreateTest = () => {
 								<Instructions />
 								<div className={styles['add-rmv-btn']}>
 									<Button
-										type="Button"
+										type='Button'
 										onClick={() => removeInstructions()}
 									>
 										Remove Instructions
@@ -171,7 +184,7 @@ const CreateTest = () => {
 						) : (
 							<div className={styles['add-rmv-btn']}>
 								<Button
-									type="Button"
+									type='Button'
 									onClick={() => addInstructions()}
 								>
 									Add Instructions
@@ -186,7 +199,7 @@ const CreateTest = () => {
 						/>
 						<div className={styles['add-rmv-btn']}>
 							<Button
-								type="Button"
+								type='Button'
 								onClick={() =>
 									showAddSectionModal(
 										testState.section.length
@@ -200,7 +213,7 @@ const CreateTest = () => {
 						{/*-----------Submit Test--------------*/}
 						<div className={styles['generate-test-btn']}>
 							<SubmitButton
-								type="Button"
+								type='Button'
 								onClick={showGenerateTestModal}
 							>
 								Generate Test
@@ -215,19 +228,73 @@ const CreateTest = () => {
 
 export default CreateTest;
 
-const SectionList = React.memo((props) => {
-	const testContent = useState(props.testContent);
+const SectionList = (props) => {
+	const testContent = useHookstate(props.testContent);
+	const viewport_ref = useRef(null);
+
+	// return (
+	// 	<React.Fragment>
+	// 		<div ref={viewport_ref}>
+	// 			<ViewportList viewportRef={viewport_ref} items={testContent}>
+	// 				{(item, index) => (
+	// 					<div key={item.id.value}>
+	// 						<p>Last render at: {new Date().toISOString()}</p>
+
+	// 						<div>
+	// 							{item.question_type.value === 'MC' && (
+	// 								<MCQuestion
+	// 									question_structure={
+	// 										item.question_structure
+	// 									}
+	// 								/>
+	// 							)}
+	// 						</div>
+	// 						<Button
+	// 							type='Button'
+	// 							onClick={() =>
+	// 								props.showRemoveSectionModal(index)
+	// 							}
+	// 						>
+	// 							Remove Section
+	// 						</Button>
+	// 					</div>
+	// 				)}
+	// 			</ViewportList>
+	// 		</div>
+
+	// 		<button
+	// 			onClick={() => {
+	// 				window.scrollTo(0, 0);
+	// 			}}
+	// 		>
+	// 			cunt
+	// 		</button>
+	// 	</React.Fragment>
+	// );
+
 	return testContent.map((element, index) => (
 		<div key={element.id.value}>
-			{element.question_type.value === 'MC' && (
-				<MCQuestion question_structure={element.question_structure} />
-			)}
+			<p>Last render at: {new Date().toISOString()}</p>
+
+			<div>
+				{element.question_type.value === 'MC' && (
+					<MCQuestion
+						question_structure={element.question_structure}
+					/>
+				)}
+			</div>
 			<Button
-				type="Button"
+				type='Button'
 				onClick={() => props.showRemoveSectionModal(index)}
 			>
 				Remove Section
 			</Button>
 		</div>
 	));
-});
+};
+
+const JsonDump = (props) => {
+	// const state = useHookstate(props.state);
+	// Current state: {JSON.stringify(state.value)} <br />
+	//return <p>Last render at: {new Date().toISOString()}</p>;
+};

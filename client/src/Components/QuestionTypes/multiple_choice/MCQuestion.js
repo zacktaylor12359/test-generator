@@ -1,7 +1,8 @@
 import React, { useRef, useMemo, Fragment } from 'react';
-import { State, useState, none } from '@hookstate/core';
+import { State, useHookstate, none } from '@hookstate/core';
 import { useTestState } from '../../../store/sectionState.ts';
 import reactTextareaAutosize from 'react-textarea-autosize';
+import { ViewportList } from 'react-viewport-list';
 
 import styles from './MCQuestion.module.css';
 import Button from '../../UI/Button';
@@ -31,12 +32,13 @@ section [
 
 const MCQuestion = (props) => {
 	const { question_structure } = props;
-	let sectionState = useState(question_structure);
-	let questionsState = useState(question_structure.questions);
-	const addQuestion = () => {
+	const section_state = useHookstate(question_structure);
+	const question_list_ref = useRef(null);
+
+	const onAddQuestionHandler = (index) => {
 		let new_id = 1;
 		while (
-			sectionState.questions.findIndex(
+			section_state.questions.findIndex(
 				// eslint-disable-next-line no-loop-func
 				(i) => i.id.get() === new_id
 			) !== -1
@@ -45,44 +47,69 @@ const MCQuestion = (props) => {
 		}
 		const answersArr = [];
 
-		for (let i = 1; i <= sectionState.num_options.get(); i++) {
+		for (let i = 1; i <= section_state.num_options.get(); i++) {
 			answersArr.push({
 				id: i,
 				entered_option: '',
 			});
 		}
+
+		let listBefore = JSON.parse(
+			JSON.stringify(section_state.questions.get().slice(0, index + 1))
+		);
+		let listAfter = JSON.parse(
+			JSON.stringify(section_state.questions.get().slice(index + 1))
+		);
+
 		const newQuestion = {
 			id: new_id,
 			entered_question: '',
-			conrrect_answer_id: 1,
+			correct_answer_id: 1,
 			answer_options: answersArr,
 		};
 
-		sectionState.questions[sectionState.questions.length].set(newQuestion);
+		let newList = [...listBefore, newQuestion, ...listAfter];
+
+		section_state.questions.set(newList);
 	};
 
 	return (
-		<Fragment>
-			{questionsState.map((element, index) => (
-				<div key={element.id.value}>
-					{console.log('question Rendered')}
-					<Question question={element} index={index} />
-				</div>
-			))}
-			<div className='Button-section'>
-				<Button type='Button' onClick={addQuestion}>
-					AddQuestion
-				</Button>
-			</div>
-		</Fragment>
+		<div ref={question_list_ref}>
+			<ViewportList
+				viewportRef={question_list_ref}
+				items={section_state.questions}
+			>
+				{(item, index) => (
+					<div key={item.id.value}>
+						<Question
+							question={item}
+							index={index}
+							addQuestion={() => onAddQuestionHandler(index)}
+						/>
+					</div>
+				)}
+			</ViewportList>
+		</div>
+		// {/* <Fragment>
+		// 	{section_state.questions.map((element, index) => (
+		// 		<div key={element.id.value}>
+		// 			<Question
+		// 				question={element}
+		// 				index={index}
+		// 				addQuestion={() => onAddQuestionHandler(index)}
+		// 			/>
+		// 		</div>
+		// 	))}
+		// </Fragment> */}
 	);
 };
 
 export default MCQuestion;
 
 const Question = (props) => {
-	const { question, index } = props;
-	let questionState = useState(question);
+	const { question, index, addQuestion } = props;
+
+	let questionState = useHookstate(question);
 	const questionInputRef = useRef();
 
 	const questionBlurHandler = () => {
@@ -111,6 +138,7 @@ const Question = (props) => {
 					onBlur={questionBlurHandler}
 					type='text'
 				/>
+				Last render at: {new Date().toISOString()}
 			</div>
 
 			<div className={styles['answer-container']}>
@@ -120,13 +148,19 @@ const Question = (props) => {
 					onChange={onChangeAnswerHandler}
 				/>
 			</div>
-			<Button
-				className={styles['rmv-btn']}
-				type='Button'
-				onClick={() => removeQuestion(props.index)}
-			>
-				Remove Question
-			</Button>
+			<div className='Button-section'>
+				<Button type='Button' onClick={() => addQuestion()}>
+					AddQuestion
+				</Button>
+
+				<Button
+					className={styles['rmv-btn']}
+					type='Button'
+					onClick={() => removeQuestion(index)}
+				>
+					Remove Question
+				</Button>
+			</div>
 		</Fragment>
 	);
 };

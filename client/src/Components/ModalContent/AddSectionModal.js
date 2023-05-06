@@ -94,7 +94,6 @@ const SectionModal = (props) => {
 					questions: questionsArr,
 				},
 			};
-			console.log('still good');
 			addMCSection(newSection, props.index);
 		}
 		props.onClose();
